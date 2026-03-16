@@ -35,7 +35,7 @@
         .dash-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 1300px; }
         .dash-table th, .dash-table td { border: 1px solid #ccc; padding: 8px; text-align: center; }
         .bg-header { background: #f1f5f9; font-weight: bold; }
-        .input-inline { width: 55px; text-align: center; border: 1px solid #94a3b8; padding: 4px; border-radius: 4px; font-family: sans-serif; }
+        .input-inline { width: 55px; text-align: center; border: 1px solid #94a3b8; padding: 4px; border-radius: 4px; }
         #canvasOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; overflow-y: auto; text-align: center; padding: 20px 0; display: none; }
         canvas { background: white; max-width: 95%; height: auto; margin-bottom: 20px; box-shadow: 0 0 30px rgba(0,0,0,0.7); border: 2px solid #ccc; }
     </style>
@@ -44,15 +44,7 @@
 
 <header class="app-header">
     <div class="app-logo">
-        <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M120 220H320V260H220L200 320H150L170 260H120V220Z" fill="#E2E8F0"/>
-            <rect x="220" y="210" width="100" height="15" rx="2" fill="#CBD5E1"/>
-            <path d="M320 225L380 235V245L320 255V225Z" fill="#94A3B8"/>
-            <rect x="300" y="300" width="15" height="40" rx="2" fill="#B58900"/>
-            <path d="M300 300C300 285 315 285 315 300V305H300V300Z" fill="#D4AF37"/>
-            <rect x="330" y="300" width="15" height="40" rx="2" fill="#B58900"/>
-            <path d="M330 300C330 285 345 285 345 300V305H330V300Z" fill="#D4AF37"/>
-        </svg>
+        <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M120 220H320V260H220L200 320H150L170 260H120V220Z" fill="#E2E8F0"/><rect x="220" y="210" width="100" height="15" rx="2" fill="#CBD5E1"/><path d="M320 225L380 235V245L320 255V225Z" fill="#94A3B8"/><rect x="300" y="300" width="15" height="40" rx="2" fill="#B58900"/><path d="M300 300C300 285 315 285 315 300V305H300V300Z" fill="#D4AF37"/><rect x="330" y="300" width="15" height="40" rx="2" fill="#B58900"/><path d="M330 300C330 285 345 285 345 300V305H330V300Z" fill="#D4AF37"/></svg>
     </div>
     <div class="app-title">လက်နက်ခဲယမ်း စီမံခန့်ခွဲမှုစနစ်</div>
 </header>
@@ -83,18 +75,11 @@
                 <div class="form-group">
                     <label>အဆင့်</label>
                     <select id="m_rank">
-                        <option value="တသ">တသ</option><option value="ဒုတက">ဒုတက</option>
-                        <option value="တက">တက</option><option value="တကက">တကက</option>
-                        <option value="ခွဲတကက">ခွဲတကက</option><option value="ဒုအရခဗ">ဒုအရခဗ</option>
-                        <option value="အရခဗ">အရခဗ</option><option value="ဒုဗိုလ်">ဒုဗိုလ်</option>
-                        <option value="ဗိုလ်">ဗိုလ်</option><option value="ဗိုလ်ကြီး">ဗိုလ်ကြီး</option>
+                        <option value="တသ">တသ</option><option value="ဒုတက">ဒုတက</option><option value="တက">တက</option><option value="တကက">တကက</option><option value="ခွဲတကက">ခွဲတကက</option><option value="ဒုအရခဗ">ဒုအရခဗ</option><option value="အရခဗ">အရခဗ</option><option value="ဒုဗိုလ်">ဒုဗိုလ်</option><option value="ဗိုလ်">ဗိုလ်</option><option value="ဗိုလ်ကြီး">ဗိုလ်ကြီး</option>
                     </select>
                 </div>
                 <div class="form-group"><label>အမည်</label><input type="text" id="m_name"></div>
-                <div class="form-group">
-                    <label>လက်နက်</label>
-                    <select id="m_type"><option value="အမ်အေ-၁">အမ်အေ-၁</option><option value="အမ်အေ-၃">အမ်အေ-၃</option><option value="အမ်အေ-၁၃">အမ်အေ-၁၃</option></select>
-                </div>
+                <div class="form-group"><label>လက်နက်</label><select id="m_type"><option value="အမ်အေ-၁">အမ်အေ-၁</option><option value="အမ်အေ-၃">အမ်အေ-၃</option><option value="အမ်အေ-၁၃">အမ်အေ-၁၃</option></select></div>
                 <div class="form-group"><label>လက်နက်နံပါတ်</label><input type="text" id="m_wNo"></div>
                 <div style="display: flex; align-items: flex-end;"><button id="m_btn" class="btn btn-add" onclick="addMapping()">စာရင်းသွင်းမည်</button></div>
             </div>
@@ -104,7 +89,7 @@
 
     <div id="ioPage" class="page">
         <div class="card">
-            <h3 id="io_header">၂။ အထုတ်/အသွင်း ပြုလုပ်ရန်</h3>
+            <h3 id="io_title">၂။ အထုတ်/အသွင်း ပြုလုပ်ရန်</h3>
             <div class="form-grid">
                 <input type="hidden" id="edit_io_id">
                 <div class="form-group"><label>စစ်သည်ရွေးရန်</label><select id="io_person" onchange="autoFillIO()"></select></div>
@@ -113,17 +98,8 @@
             <div id="io_details" style="display:none; margin-top:15px;">
                 <div id="items_area"></div>
                 <div class="form-grid" style="margin-top:10px;">
-                    <div class="form-group">
-                        <label>အကြောင်းအရာ</label>
-                        <select id="io_purpose">
-                            <option value="စစ်ဆင်ရေး">စစ်ဆင်ရေး</option>
-                            <option value="လုံခြုံရေး">လုံခြုံရေး</option>
-                            <option value="ကင်းတာဝန်">ကင်းတာဝန်</option>
-                            <option value="သင်တန်း">သင်တန်း</option>
-                            <option value="စစ်ရေးပြ">စစ်ရေးပြ</option>
-                            <option value="လှုပ်ရှား">လှုပ်ရှား</option>
-                            <option value="အခြား">အခြား</option>
-                        </select>
+                    <div class="form-group"><label>အကြောင်းအရာ</label>
+                        <select id="io_purpose"><option value="စစ်ဆင်ရေး">စစ်ဆင်ရေး</option><option value="လုံခြုံရေး">လုံခြုံရေး</option><option value="ကင်းတာဝန်">ကင်းတာဝန်</option><option value="သင်တန်း">သင်တန်း</option><option value="စစ်ရေးပြ">စစ်ရေးပြ</option><option value="လှုပ်ရှား">လှုပ်ရှား</option><option value="အခြား">အခြား</option></select>
                     </div>
                     <div class="form-group"><label>တည်နေရာ</label><input type="text" id="io_location"></div>
                     <div class="form-group"><label>မှတ်ချက်</label><input type="text" id="io_remark"></div>
@@ -131,7 +107,6 @@
                 <div class="form-grid" style="margin-top:15px;">
                     <button id="btn_out" class="btn btn-add" style="background:#d97706;" onclick="processIO('OUT')">ထုတ်ယူမည်</button>
                     <button id="btn_in" class="btn btn-add" style="background:#059669;" onclick="processIO('IN')">ပြန်အပ်မည်</button>
-                    <button id="btn_reset" class="btn" style="background:#94a3b8; color:white; display:none;" onclick="resetIO()">ပယ်ဖျက်</button>
                 </div>
             </div>
         </div>
@@ -139,12 +114,12 @@
 
     <div id="outListPage" class="page">
         <h3>၃။ လက်ရှိထုတ်ယူထားသော စာရင်း</h3>
-        <div style="overflow-x:auto;"><table id="outTable"><thead><tr><th>ရက်စွဲ</th><th>ကိုယ်ပိုင်အမှတ်</th><th>အမည်</th><th>အကြောင်းအရာ</th><th>ထုတ်ယူသည့်ပစ္စည်း</th><th>ပြင်/ပြေစာ/ဖျက်</th></tr></thead><tbody></tbody></table></div>
+        <div style="overflow-x:auto;"><table id="outTable"><thead><tr><th>ရက်စွဲ</th><th>ကိုယ်ပိုင်အမှတ်</th><th>အမည်</th><th>လက်နက်နံပါတ်</th><th>အကြောင်းအရာ</th><th>ထုတ်ယူသည့်ပစ္စည်း</th><th>ပြင်/ပြေစာ/ဖျက်</th></tr></thead><tbody></tbody></table></div>
     </div>
 
     <div id="historyPage" class="page">
         <h3>၄။ အပ်နှံမှုမှတ်တမ်း (History)</h3>
-        <div style="overflow-x:auto;"><table id="historyTable"><thead><tr><th>ရက်စွဲ</th><th>ကိုယ်ပိုင်အမှတ်</th><th>အမည်</th><th>အမျိုးအစား</th><th>မှတ်ချက်</th><th>ပြင်/ပြေစာ/ဖျက်</th></tr></thead><tbody></tbody></table></div>
+        <div style="overflow-x:auto;"><table id="historyTable"><thead><tr><th>ရက်စွဲ</th><th>ကိုယ်ပိုင်အမှတ်</th><th>အမည်</th><th>လက်နက်နံပါတ်</th><th>အမျိုးအစား</th><th>မှတ်ချက်</th><th>ပြင်/ပြေစာ/ဖျက်</th></tr></thead><tbody></tbody></table></div>
     </div>
 
     <div id="dashPage" class="page">
@@ -153,12 +128,8 @@
             <div class="table-container">
                 <table class="dash-table">
                     <thead>
-                        <tr class="bg-header">
-                            <th rowspan="2">စဉ်</th><th rowspan="2">အကြောင်းအရာ</th><th colspan="3">လက်နက်</th><th colspan="2">ခဲယမ်း</th><th colspan="6">ဆက်စပ်ပစ္စည်းများ</th>
-                        </tr>
-                        <tr class="bg-header">
-                            <th>အမ်အေ-၁</th><th>အမ်အေ-၃</th><th>အမ်အေ-၁၃</th><th>၉ မမ</th><th>၅.၅၆ မမ</th><th>၁/၃ ကဒ်</th><th>၁၃ ကဒ်</th><th>၁ လှံစွပ်</th><th>၁၃ လှံစွပ်</th><th>၁/၃ လွယ်</th><th>၁၃ လွယ်</th>
-                        </tr>
+                        <tr class="bg-header"><th rowspan="2">စဉ်</th><th rowspan="2">အကြောင်းအရာ</th><th colspan="3">လက်နက်</th><th colspan="2">ခဲယမ်း</th><th colspan="6">ဆက်စပ်ပစ္စည်းများ</th></tr>
+                        <tr class="bg-header"><th>အမ်အေ-၁</th><th>အမ်အေ-၃</th><th>အမ်အေ-၁၃</th><th>၉ မမ</th><th>၅.၅၆ မမ</th><th>၁/၃ ကဒ်</th><th>၁၃ ကဒ်</th><th>၁ လှံစွပ်</th><th>၁၃ လှံစွပ်</th><th>၁/၃ လွယ်</th><th>၁၃ လွယ်</th></tr>
                     </thead>
                     <tbody id="dashBody"></tbody>
                 </table>
@@ -196,11 +167,13 @@
     };
 
     const mmNum = (n) => {
-        if(n === 0 || n === "0" || n === "") return ""; 
+        if (n === 0 || n === "0" || n === "") return ""; 
         return String(n).replace(/[0-9]/g, d => "၀၁၂၃၄၅၆၇၈၉"[d]);
     };
+    
+    const mmNumInput = (n) => (n === 0 || n === "0" || n === "") ? "၀" : String(n).replace(/[0-9]/g, d => "၀၁၂၃၄၅၆၇၈၉"[d]);
     const toEn = (s) => String(s).replace(/[၀-၉]/g, d => "0123456789"["၀၁၂၃၄၅၆၇၈၉".indexOf(d)]);
-    const getToday = () => { const d = new Date(); return `${mmNum(d.getDate())}-${mmNum(d.getMonth()+1)}-${mmNum(d.getFullYear())}`; };
+    const getToday = () => { const d = new Date(); return `${mmNumInput(d.getDate())}-${mmNumInput(d.getMonth()+1)}-${mmNumInput(d.getFullYear())}`; };
 
     window.onload = () => { renderMap(); renderOut(); renderHistory(); document.getElementById('io_date').value = getToday(); };
 
@@ -217,120 +190,55 @@
         const id = document.getElementById('edit_m_id').value;
         const d = { id: id ? parseInt(id) : Date.now(), serial: document.getElementById('m_serial').value, rank: document.getElementById('m_rank').value, name: document.getElementById('m_name').value, type: document.getElementById('m_type').value, wNo: document.getElementById('m_wNo').value };
         if(!d.name) return;
-        if(id) {
-            const idx = mappingList.findIndex(m => m.id == id);
-            mappingList[idx] = d;
-            document.getElementById('edit_m_id').value = '';
-            document.getElementById('m_btn').innerText = 'စာရင်းသွင်းမည်';
-        } else { mappingList.push(d); }
+        if(id) { mappingList[mappingList.findIndex(m => m.id == id)] = d; document.getElementById('edit_m_id').value = ''; document.getElementById('m_btn').innerText = 'စာရင်းသွင်းမည်'; } 
+        else { mappingList.push(d); }
         localStorage.setItem('map', JSON.stringify(mappingList)); renderMap();
-        document.getElementById('m_serial').value=''; document.getElementById('m_name').value=''; document.getElementById('m_wNo').value='';
+        ['m_serial','m_name','m_wNo'].forEach(i => document.getElementById(i).value='');
     }
-    
-    function renderMap() {
-        document.querySelector('#mappingTable tbody').innerHTML = mappingList.map((m, i) => `<tr><td>${mmNum(i+1)}</td><td>${m.serial}</td><td>${m.rank} ${m.name}</td><td>${m.type} (${m.wNo})</td><td><button class="btn btn-edit" onclick="editMap(${m.id})">ပြင်</button><button class="btn btn-delete" onclick="delMap(${m.id})">X</button></td></tr>`).join('');
-    }
-
-    function editMap(id) {
-        const m = mappingList.find(x => x.id == id);
-        document.getElementById('edit_m_id').value = m.id;
-        document.getElementById('m_serial').value = m.serial; document.getElementById('m_rank').value = m.rank;
-        document.getElementById('m_name').value = m.name; document.getElementById('m_type').value = m.type;
-        document.getElementById('m_wNo').value = m.wNo; document.getElementById('m_btn').innerText = 'ပြင်ဆင်မည်';
-        window.scrollTo(0,0);
-    }
-
+    function renderMap() { document.querySelector('#mappingTable tbody').innerHTML = mappingList.map((m, i) => `<tr><td>${mmNumInput(i+1)}</td><td>${m.serial}</td><td>${m.rank} ${m.name}</td><td>${m.type} (${m.wNo})</td><td><button class="btn btn-edit" onclick="editMap(${m.id})">ပြင်</button><button class="btn btn-delete" onclick="delMap(${m.id})">X</button></td></tr>`).join(''); }
+    function editMap(id) { const m = mappingList.find(x => x.id == id); document.getElementById('edit_m_id').value = m.id; document.getElementById('m_serial').value = m.serial; document.getElementById('m_rank').value = m.rank; document.getElementById('m_name').value = m.name; document.getElementById('m_type').value = m.type; document.getElementById('m_wNo').value = m.wNo; document.getElementById('m_btn').innerText = 'ပြင်ဆင်မည်'; window.scrollTo(0,0); }
     function delMap(id) { if(confirm('ဖျက်မှာသေချာလား?')) { mappingList = mappingList.filter(m => m.id !== id); localStorage.setItem('map', JSON.stringify(mappingList)); renderMap(); } }
 
-    function updateSel() {
-        const sel = document.getElementById('io_person');
-        sel.innerHTML = '<option value="">ရွေးပါ</option>' + mappingList.map(m => `<option value="${m.id}">${m.serial} - ${m.rank} - ${m.name}</option>`).join('');
-    }
-
+    function updateSel() { const sel = document.getElementById('io_person'); sel.innerHTML = '<option value="">ရွေးပါ</option>' + mappingList.map(m => `<option value="${m.id}">${m.serial} - ${m.rank} - ${m.name}</option>`).join(''); }
     function autoFillIO() {
         const id = document.getElementById('io_person').value; if(!id) return;
         const p = mappingList.find(m => m.id == id);
         const area = document.getElementById('items_area'); document.getElementById('io_details').style.display = 'block';
         const isMA13 = p.type.includes('၁၃');
-        const items = [{n: p.type, l: '၁', u: 'လက်', q: '၁'}, {n: isMA13 ? '၉ မမကျည်' : '၅.၅၆ မမကျည်', l: '၂', u: 'တောင့်', q: isMA13 ? '၂၄၀' : '၁၇၀'}, {n: isMA13 ? 'အမ်အေ-၁၃ ကျည်အိမ်' : 'အမ်အေ-၁/၃ ကျည်အိမ်', l: '၃', u: 'ခု', q: isMA13 ? '၅' : '၃'}, {n: isMA13 ? 'အမ်အေ-၁၃ လှံစွပ်' : 'အမ်အေ-၁ လှံစွပ်', l: '၅', u: 'ချောင်း', q: '၁'}, {n: isMA13 ? 'အမ်အေ-၁၃ လွယ်ကြိုး' : 'အမ်အေ-၁/၃ လွယ်ကြိုး', l: '၄', u: 'ချောင်း', q: '၁'}];
-        area.innerHTML = items.map(it => `<div class="card" style="padding:10px; margin-bottom:5px; background:#f8fafc; border:1px solid #e2e8f0;"><div class="form-grid"><div class="form-group"><label>ပစ္စည်း</label><input type="text" class="io-n" value="${it.n}"></div><div class="form-group"><label>လယ်ဂျာ</label><input type="text" class="io-l" value="${it.l}"></div><div class="form-group"><label>အရေအတွက် (${it.u})</label><input type="text" class="io-q" value="${it.q}"></div><input type="hidden" class="io-u" value="${it.u}"></div></div>`).join('');
+        const items = [{n: p.type + " ("+p.wNo+")", l: '၁', u: 'လက်', q: '၁'}, {n: isMA13 ? '၉ မမကျည်' : '၅.၅၆ မမကျည်', l: '၂', u: 'တောင့်', q: isMA13 ? '၂၄၀' : '၁၇၀'}, {n: isMA13 ? 'အမ်အေ-၁၃ ကျည်အိမ်' : 'အမ်အေ-၁/၃ ကျည်အိမ်', l: '၃', u: 'ခု', q: isMA13 ? '၅' : '၃'}, {n: isMA13 ? 'အမ်အေ-၁၃ လှံစွပ်' : 'အမ်အေ-၁ လှံစွပ်', l: '၅', u: 'ချောင်း', q: '၁'}, {n: isMA13 ? 'အမ်အေ-၁၃ လွယ်ကြိုး' : 'အမ်အေ-၁/၃ လွယ်ကြိုး', l: '၄', u: 'ချောင်း', q: '၁'}];
+        area.innerHTML = items.map(it => `<div class="card" style="padding:10px; margin-bottom:5px; background:#f8fafc; border:1px solid #e2e8f0;"><div class="form-grid"><div class="form-group"><label>ပစ္စည်း</label><input type="text" class="io-n" value="${it.n}"></div><div class="form-group"><label>လယ်ဂျာ</label><input type="text" class="io-l" value="${it.l}"></div><div class="form-group"><label>အရေအတွက် (${it.u})</label><input type="text" class="io-q" value="${mmNumInput(it.q)}"></div><input type="hidden" class="io-u" value="${it.u}"></div></div>`).join('');
     }
 
     function processIO(type) {
         const pId = document.getElementById('io_person').value; if(!pId) return;
         const p = mappingList.find(m => m.id == pId);
+        let items = []; document.querySelectorAll('.io-n').forEach((n, i) => items.push({ n: n.value, l: document.querySelectorAll('.io-l')[i].value, u: document.querySelectorAll('.io-u')[i].value, q: document.querySelectorAll('.io-q')[i].value }));
         const editId = document.getElementById('edit_io_id').value;
-        let activeItems = [];
-        document.querySelectorAll('.io-n').forEach((n, i) => { if(n.value.trim() !== "") { activeItems.push({ n: n.value, l: document.querySelectorAll('.io-l')[i].value, u: document.querySelectorAll('.io-u')[i].value, q: document.querySelectorAll('.io-q')[i].value }); } });
-        
-        const entry = { 
-            id: editId ? parseInt(editId) : Date.now(), 
-            p, 
-            keeper: { serial: document.getElementById('k_serial').value, rank: document.getElementById('k_rank').value, name: document.getElementById('k_name').value }, 
-            date: document.getElementById('io_date').value, 
-            purpose: document.getElementById('io_purpose').value, 
-            remark: type === 'OUT' ? (document.getElementById('io_purpose').value + (document.getElementById('io_location').value ? " ("+document.getElementById('io_location').value+")" : "") + " အတွက်ထုတ်ပေးခြင်းဖြစ်ပါသည်။") : "တာဝန်ပြီးဆုံး၍ ပြန်လည်အပ်နှံခြင်းဖြစ်ပါသည်။", 
-            type, 
-            items: activeItems 
-        };
-
+        const entry = { id: editId ? parseInt(editId) : Date.now(), p, keeper: { serial: document.getElementById('k_serial').value, rank: document.getElementById('k_rank').value, name: document.getElementById('k_name').value }, date: document.getElementById('io_date').value, purpose: document.getElementById('io_purpose').value, remark: type === 'OUT' ? (document.getElementById('io_purpose').value + (document.getElementById('io_location').value ? " ("+document.getElementById('io_location').value+")" : "") + " အတွက်ထုတ်ပေးခြင်းဖြစ်ပါသည်။") : "တာဝန်ပြီးဆုံး၍ ပြန်လည်အပ်နှံခြင်းဖြစ်ပါသည်။", type, items };
         if(editId) {
-            if(type === 'OUT') { const idx = outList.findIndex(x => x.id == editId); if(idx>-1) outList[idx] = entry; }
-            else { const idx = historyList.findIndex(x => x.id == editId); if(idx>-1) historyList[idx] = entry; }
-        } else {
-            if(type === 'OUT') outList.push(entry); else { outList = outList.filter(o => o.p.id != pId); historyList.push(entry); }
-        }
-
+            if(type==='OUT') outList[outList.findIndex(x=>x.id==editId)] = entry; else historyList[historyList.findIndex(x=>x.id==editId)] = entry;
+            document.getElementById('edit_io_id').value = ''; document.getElementById('io_title').innerText = '၂။ အထုတ်/အသွင်း ပြုလုပ်ရန်';
+        } else { if(type === 'OUT') outList.push(entry); else { outList = outList.filter(o => o.p.id != pId); historyList.push(entry); } }
         localStorage.setItem('out', JSON.stringify(outList)); localStorage.setItem('his', JSON.stringify(historyList));
-        resetIO(); renderOut(); renderHistory(); showPage(type === 'OUT' ? 'outListPage' : 'historyPage');
+        renderOut(); renderHistory(); showPage(type === 'OUT' ? 'outListPage' : 'historyPage');
     }
 
-    function resetIO() {
-        document.getElementById('edit_io_id').value = '';
-        document.getElementById('io_header').innerText = '၂။ အထုတ်/အသွင်း ပြုလုပ်ရန်';
-        document.getElementById('btn_out').style.display = 'block';
-        document.getElementById('btn_in').style.display = 'block';
-        document.getElementById('btn_reset').style.display = 'none';
-        document.getElementById('io_details').style.display = 'none';
-        document.getElementById('io_person').value = '';
+    function editIO(id, type) {
+        const data = type === 'OUT' ? outList.find(o=>o.id==id) : historyList.find(h=>h.id==id);
+        showPage('ioPage'); document.getElementById('edit_io_id').value = data.id;
+        document.getElementById('io_title').innerText = (type==='OUT' ? 'ထုတ်စာရင်းပြင်ဆင်ရန်' : 'အပ်စာရင်းပြင်ဆင်ရန်');
+        document.getElementById('io_person').value = data.p.id;
+        document.getElementById('io_date').value = data.date;
+        document.getElementById('io_purpose').value = data.purpose;
+        document.getElementById('io_details').style.display = 'block';
+        document.getElementById('items_area').innerHTML = data.items.map(it => `<div class="card" style="padding:10px; margin-bottom:5px; background:#f8fafc; border:1px solid #e2e8f0;"><div class="form-grid"><div class="form-group"><label>ပစ္စည်း</label><input type="text" class="io-n" value="${it.n}"></div><div class="form-group"><label>လယ်ဂျာ</label><input type="text" class="io-l" value="${it.l}"></div><div class="form-group"><label>အရေအတွက် (${it.u})</label><input type="text" class="io-q" value="${it.q}"></div><input type="hidden" class="io-u" value="${it.u}"></div></div>`).join('');
+        if(type==='OUT') { document.getElementById('btn_in').style.display='none'; document.getElementById('btn_out').style.display='block'; }
+        else { document.getElementById('btn_out').style.display='none'; document.getElementById('btn_in').style.display='block'; }
     }
 
-    function editOut(id) {
-        const d = outList.find(x => x.id == id);
-        showPage('ioPage');
-        document.getElementById('io_header').innerText = 'ထုတ်စာရင်း ပြင်ဆင်ခြင်း';
-        document.getElementById('edit_io_id').value = d.id;
-        document.getElementById('io_person').value = d.p.id;
-        document.getElementById('io_date').value = d.date;
-        document.getElementById('io_purpose').value = d.purpose;
-        document.getElementById('btn_in').style.display = 'none';
-        document.getElementById('btn_reset').style.display = 'block';
-        autoFillIO();
-        document.querySelectorAll('.io-n').forEach((n, i) => { if(d.items[i]) { n.value = d.items[i].n; document.querySelectorAll('.io-l')[i].value = d.items[i].l; document.querySelectorAll('.io-q')[i].value = d.items[i].q; } });
-        window.scrollTo(0,0);
-    }
-
-    function editHis(id) {
-        const d = historyList.find(x => x.id == id);
-        showPage('ioPage');
-        document.getElementById('io_header').innerText = 'အပ်စာရင်း ပြင်ဆင်ခြင်း';
-        document.getElementById('edit_io_id').value = d.id;
-        document.getElementById('io_person').value = d.p.id;
-        document.getElementById('io_date').value = d.date;
-        document.getElementById('btn_out').style.display = 'none';
-        document.getElementById('btn_reset').style.display = 'block';
-        autoFillIO();
-        window.scrollTo(0,0);
-    }
-
-    function renderOut() {
-        document.querySelector('#outTable tbody').innerHTML = outList.map(o => `<tr><td>${o.date}</td><td>${o.p.serial}</td><td>${o.p.rank} ${o.p.name}</td><td>${o.purpose}</td><td style="text-align:left; font-size:11px;">${o.items.map(i => i.n+':'+mmNum(i.q)).join('<br>')}</td><td><button class="btn btn-edit" onclick="editOut(${o.id})">ပြင်</button><button class="btn btn-print" onclick="initVoucher(${o.id}, 'OUT')">ပြေစာ</button><button class="btn btn-delete" onclick="delOut(${o.id})">X</button></td></tr>`).join('');
-    }
+    function renderOut() { document.querySelector('#outTable tbody').innerHTML = outList.map(o => `<tr><td>${o.date}</td><td>${o.p.serial}</td><td>${o.p.rank} ${o.p.name}</td><td>${o.p.wNo}</td><td>${o.purpose}</td><td style="text-align:left; font-size:11px;">${o.items.map(i => i.n+':'+mmNumInput(i.q)).join('<br>')}</td><td><button class="btn btn-edit" onclick="editIO(${o.id},'OUT')">ပြင်</button><button class="btn btn-print" onclick="initVoucher(${o.id}, 'OUT')">ပြေစာ</button><button class="btn btn-delete" onclick="delOut(${o.id})">X</button></td></tr>`).join(''); }
     function delOut(id) { if(confirm('ဖျက်မှာသေချာလား?')) { outList = outList.filter(o => o.id !== id); localStorage.setItem('out', JSON.stringify(outList)); renderOut(); } }
-
-    function renderHistory() {
-        document.querySelector('#historyTable tbody').innerHTML = historyList.map(h => `<tr><td>${h.date}</td><td>${h.p.serial}</td><td>${h.p.name}</td><td>${h.type}</td><td>${h.remark}</td><td><button class="btn btn-edit" onclick="editHis(${h.id})">ပြင်</button><button class="btn btn-print" onclick="initVoucher(${h.id}, 'IN')">ပြေစာ</button><button class="btn btn-delete" onclick="delH(${h.id})">X</button></td></tr>`).join('');
-    }
+    function renderHistory() { document.querySelector('#historyTable tbody').innerHTML = historyList.map(h => `<tr><td>${h.date}</td><td>${h.p.serial}</td><td>${h.p.name}</td><td>${h.p.wNo}</td><td>${h.type}</td><td>${h.remark}</td><td><button class="btn btn-edit" onclick="editIO(${h.id},'IN')">ပြင်</button><button class="btn btn-print" onclick="initVoucher(${h.id}, 'IN')">ပြေစာ</button><button class="btn btn-delete" onclick="delH(${h.id})">X</button></td></tr>`).join(''); }
     function delH(id) { if(confirm('ဖျက်မှာသေချာလား?')) { historyList = historyList.filter(h => h.id !== id); localStorage.setItem('his', JSON.stringify(historyList)); renderHistory(); } }
 
     function renderDashboard() {
@@ -338,97 +246,73 @@
         const pTypes = ['စစ်ဆင်ရေး', 'လုံခြုံရေး', 'ကင်းတာဝန်', 'သင်တန်း', 'စစ်ရေးပြ', 'လှုပ်ရှား', 'အခြား'];
         let subTotals = {}; pTypes.forEach(t => subTotals[t] = { ma1:0, ma3:0, ma13:0, am9:0, am556:0, mag13:0, mag13_2:0, bay1:0, bay13:0, str13:0, str13_2:0 });
         let totalIssued = { ma1:0, ma3:0, ma13:0, am9:0, am556:0, mag13:0, mag13_2:0, bay1:0, bay13:0, str13:0, str13_2:0 };
-        
         outList.forEach(out => { 
-            let pt = out.purpose ? out.purpose.trim() : 'အခြား';
-            if (!pTypes.includes(pt)) pt = 'အခြား';
+            let pt = pTypes.includes(out.purpose) ? out.purpose : 'အခြား';
             out.items.forEach(it => { 
-                let k = ''; const n = it.n ? it.n.trim() : ""; 
-                const qty = parseInt(toEn(it.q)) || 0;
-                if (n === "အမ်အေ-၁") k = 'ma1';
-                else if (n === "အမ်အေ-၃") k = 'ma3';
-                else if (n.includes("အမ်အေ-၁၃") && !n.includes("ကျည်အိမ်") && !n.includes("လှံစွပ်") && !n.includes("လွယ်ကြိုး")) k = 'ma13';
-                else if (n.includes("၉ မမ")) k = 'am9';
-                else if (n.includes("၅.၅၆")) k = 'am556';
-                else if (n.includes("၁/၃") && n.includes("ကျည်အိမ်")) k = 'mag13';
-                else if (n.includes("၁၃") && n.includes("ကျည်အိမ်")) k = 'mag13_2';
-                else if (n.includes("၁ လှံစွပ်")) k = 'bay1';
-                else if (n.includes("၁၃ လှံစွပ်")) k = 'bay13';
-                else if (n.includes("၁/၃") && n.includes("လွယ်ကြိုး")) k = 'str13';
-                else if (n.includes("၁၃") && n.includes("လွယ်ကြိုး")) k = 'str13_2';
-                if (k && subTotals[pt]) { subTotals[pt][k] += qty; totalIssued[k] += qty; } 
-            }); 
+                let k = ''; const n = it.n, qty = parseInt(toEn(it.q)) || 0;
+                if(n.includes("အမ်အေ-၁") && !n.includes("၁၃") && !n.includes("ကျည်အိမ်") && !n.includes("လှံစွပ်") && !n.includes("လွယ်ကြိုး")) k='ma1'; 
+                else if(n.includes("အမ်အေ-၃")) k='ma3'; 
+                else if(n.includes("အမ်အေ-၁၃") && !n.includes("ကျည်အိမ်") && !n.includes("လှံစွပ်") && !n.includes("လွယ်ကြိုး")) k='ma13';
+                else if(n.includes("၉ မမ")) k='am9'; else if(n.includes("၅.၅၆")) k='am556'; 
+                else if(n.includes("၁/၃")&&n.includes("ကျည်အိမ်")) k='mag13'; else if(n.includes("၁၃")&&n.includes("ကျည်အိမ်")) k='mag13_2';
+                else if(n.includes("၁ လှံစွပ်")) k='bay1'; else if(n.includes("၁၃ လှံစွပ်")) k='bay13'; 
+                else if(n.includes("၁/၃")&&n.includes("လွယ်ကြိုး")) k='str13'; else if(n.includes("၁၃")&&n.includes("လွယ်ကြိုး")) k='str13_2';
+                if(k) { subTotals[pt][k] += qty; totalIssued[k] += qty; }
+            });
         });
-
         const body = document.getElementById('dashBody');
-        let html = `<tr><td>၁</td><td style="text-align:left;">စာရင်းရှိ</td>${keys.map(k => `<td><input class="input-inline" type="text" value="${mmNum(stockMaster.opening[k] || 0)}" onchange="updateStock('opening','${k}',this.value)"></td>`).join('')}</tr>`;
-        html += `<tr class="bg-header" style="background:#fef9c3;"><td>၂</td><td style="text-align:left;">ထုတ်ပေးစာရင်းစုစုပေါင်း (-)</td>${keys.map(k => `<td>${mmNum(totalIssued[k])}</td>`).join('')}</tr>`;
-        pTypes.forEach((pt, idx) => { html += `<tr style="font-size:12px; color:#64748b;"><td>-</td><td style="text-align:left; padding-left:20px;">(${mmNum(idx+1)}) ${pt}</td>${keys.map(k => `<td>${mmNum(subTotals[pt][k])}</td>`).join('')}</tr>`; });
-        html += `<tr style="background:#e0f2fe;"><td>၃</td><td style="text-align:left;">အပ်နှံ (-)</td>${keys.map(k => `<td><input class="input-inline" type="text" value="${mmNum(stockMaster.return[k] || 0)}" onchange="updateStock('return','${k}',this.value)"></td>`).join('')}</tr><tr style="background:#fee2e2;"><td>၄</td><td style="text-align:left;">စစ်ဆင်ရေးဆုံးရှုံး (-)</td>${keys.map(k => `<td><input class="input-inline" type="text" value="${mmNum(stockMaster.loss[k] || 0)}" onchange="updateStock('loss','${k}',this.value)"></td>`).join('')}</tr><tr style="background:#dcfce7; font-weight:bold; font-size:14px;"><td>၅</td><td style="text-align:left;">စတိုကျန်</td>${keys.map(k => `<td>${mmNum((stockMaster.opening[k]||0) - totalIssued[k] - (stockMaster.return[k]||0) - (stockMaster.loss[k]||0))}</td>`).join('')}</tr>`;
-        body.innerHTML = html;
+        let h = `<tr><td>၁</td><td style="text-align:left;">စာရင်းရှိ</td>${keys.map(k => `<td><input class="input-inline" type="text" value="${mmNumInput(stockMaster.opening[k])}" onchange="updateStock('opening','${k}',this.value)"></td>`).join('')}</tr>`;
+        h += `<tr class="bg-header" style="background:#fef9c3;"><td>၂</td><td style="text-align:left;">ထုတ်ပေးစာရင်းစုစုပေါင်း (-)</td>${keys.map(k => `<td>${mmNum(totalIssued[k])}</td>`).join('')}</tr>`;
+        pTypes.forEach((pt, idx) => { h += `<tr style="font-size:12px; color:#64748b;"><td>-</td><td style="text-align:left; padding-left:20px;">(${mmNumInput(idx+1)}) ${pt}</td>${keys.map(k => `<td>${mmNum(subTotals[pt][k])}</td>`).join('')}</tr>`; });
+        h += `<tr style="background:#e0f2fe;"><td>၃</td><td style="text-align:left;">အပ်နှံ (-)</td>${keys.map(k => `<td><input class="input-inline" type="text" value="${mmNumInput(stockMaster.return[k])}" onchange="updateStock('return','${k}',this.value)"></td>`).join('')}</tr><tr style="background:#fee2e2;"><td>၄</td><td style="text-align:left;">စစ်ဆင်ရေးဆုံးရှုံး (-)</td>${keys.map(k => `<td><input class="input-inline" type="text" value="${mmNumInput(stockMaster.loss[k])}" onchange="updateStock('loss','${k}',this.value)"></td>`).join('')}</tr><tr style="background:#dcfce7; font-weight:bold; font-size:14px;"><td>၅</td><td style="text-align:left;">စတိုကျန်</td>${keys.map(k => `<td>${mmNum(stockMaster.opening[k] - totalIssued[k] - stockMaster.return[k] - stockMaster.loss[k])}</td>`).join('')}</tr>`;
+        body.innerHTML = h;
     }
-    function updateStock(key, field, val) { 
-        stockMaster[key][field] = parseInt(toEn(val)) || 0; 
-        localStorage.setItem('stockMaster', JSON.stringify(stockMaster)); 
-        renderDashboard(); 
-    }
+    function updateStock(key, field, val) { stockMaster[key][field] = parseInt(toEn(val)) || 0; localStorage.setItem('stockMaster', JSON.stringify(stockMaster)); renderDashboard(); }
 
-    const canvas = document.getElementById('voucherCanvas');
-    const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById('voucherCanvas'); const ctx = canvas.getContext('2d');
     function initVoucher(id, type) { let d = (type === 'OUT') ? outList.find(o => o.id == id) : historyList.find(h => h.id == id); if(!d) return; document.getElementById('canvasOverlay').style.display = 'block'; drawVoucher(d, type); }
     function drawDashedLine(x1, y1, x2) { ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y1); ctx.stroke(); ctx.setLineDash([]); }
-    
     function drawVoucher(d, type) {
         ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0,0, canvas.width, canvas.height); ctx.scale(2, 2); 
         ctx.fillStyle = "white"; ctx.fillRect(0, 0, 800, 1131); ctx.fillStyle = "black"; ctx.strokeStyle = "black"; ctx.lineWidth = 0.8;
-        
-        ctx.font = "900 18px sans-serif"; const hT = "လက်ခံ / ထုတ်ပေး / သုံးကုန် / လွှဲပြောင်း / ဖျက်ဆီးပြေစာ"; ctx.fillText(hT, (800 - ctx.measureText(hT).width)/2, 45);
+        ctx.font = "900 18px sans-serif"; const title = "လက်ခံ / ထုတ်ပေး / သုံးကုန် / လွှဲပြောင်း / ဖျက်ဆီးပြေစာ"; ctx.fillText(title, (800 - ctx.measureText(title).width) / 2, 45);
         ctx.font = "900 14px sans-serif"; ctx.fillText("(ထုတ်ပေးသူကရေးသွင်းရန်)", 135, 80); ctx.fillText("(လက်ခံသူကရေးသွင်းရန်)", 535, 80);
-        
-        let startY = 110, lineS = 22; const flds = ["ထုတ်ပေးပြေစာအမှတ် ၊", "ရက်စွဲ      ၊", "တပ်ရင်း/တပ်ဖွဲ့   ၊", "နေရာ      ၊"];
+        let startY = 110, lineSpacing = 22; const fields = ["ထုတ်ပေးပြေစာအမှတ် ၊", "ရက်စွဲ      ၊", "တပ်ရင်း/တပ်ဖွဲ့   ၊", "နေရာ      ၊"];
         for(let i=0; i<4; i++) { 
-            let y = startY + (i * lineS); ctx.font="13px sans-serif"; ctx.fillText(flds[i], 60, y); drawDashedLine(60 + ctx.measureText(flds[i]).width + 5, y+2, 385); 
-            ctx.fillText(flds[i].replace("ထုတ်ပေး","လက်ခံ"), 415, y); drawDashedLine(415 + ctx.measureText(flds[i]).width + 5, y+2, 750); 
-            ctx.font="bold 13px sans-serif"; 
-            if(i===1){ctx.fillText(d.date,160,y-4);ctx.fillText(d.date,510,y-4);} 
-            if(i===2){ctx.fillText("သတရ(၇၀၁၀)",160,y-4);ctx.fillText("သတရ(၇၀၁၀)",510,y-4);} 
-            if(i===3){ctx.fillText("ခွဲ(၂)လက်နက်တိုက်",160,y-4);ctx.fillText("ခွဲ(၂)လက်နက်တိုက်",510,y-4);} 
+            let y = startY + (i * lineSpacing); ctx.font="13px sans-serif"; ctx.fillText(fields[i], 60, y); drawDashedLine(60 + ctx.measureText(fields[i]).width + 5, y+2, 385); 
+            ctx.fillText(fields[i].replace("ထုတ်ပေး","လက်ခံ"), 415, y); drawDashedLine(415 + ctx.measureText(fields[i]).width + 5, y+2, 750); 
+            ctx.font="bold 13px sans-serif"; if(i===1){ctx.fillText(d.date,160,y-4);ctx.fillText(d.date,510,y-4);} if(i===2){ctx.fillText("သတရ(၇၀၁၀)",160,y-4);ctx.fillText("သတရ(၇၀၁၀)",510,y-4);} if(i===3){ctx.fillText("ခွဲ(၂)လက်နက်တိုက်",160,y-4);ctx.fillText("ခွဲ(၂)လက်နက်တိုက်",510,y-4);} 
         }
-
-        const tT = 250, tL = 60, tR = 750, tH = 620; ctx.strokeRect(tL, tT, tR - tL, tH);
-        ctx.beginPath(); ctx.moveTo(tL, tT+55); ctx.lineTo(tR, tT+55); ctx.stroke();
-        [145, 400, 480, 570, 660].forEach(x => { ctx.beginPath(); ctx.moveTo(x, tT); ctx.lineTo(x, tT+tH); ctx.stroke(); });
-        
-        ctx.font="bold 11px sans-serif"; ctx.fillText("လယ်ဂျာ /", 85, tT+18); ctx.fillText("စာမျက်နှာ /", 80, tT+33); ctx.fillText("အမှတ်", 92, tT+48);
-        ctx.font="bold 12px sans-serif"; ctx.fillText("ပစ္စည်းအမည်", 240, tT+35); ctx.fillText("ရေတွက်ပုံ", 415, tT+35); ctx.fillText("အရေအတွက်", 580, tT+18);
-        ctx.beginPath(); ctx.moveTo(480, tT+27); ctx.lineTo(tR, tT+27); ctx.stroke();
-        ctx.fillText("တောင်းခံသော", 485, tT+45); ctx.fillText("ထုတ်ပေးသော", 575, tT+45); ctx.fillText("လက်ခံရရှိသော", 665, tT+45);
-        
+        let orderY = startY + (4 * lineSpacing); ctx.font="13px sans-serif"; ctx.fillText("အမိန့်အာဏာ    ၊", 60, orderY); drawDashedLine(60 + ctx.measureText("အမိန့်အာဏာ    ၊").width + 5, orderY+2, 750);
+        let subY = orderY + lineSpacing; const subT = "၏ အမိန့်အရအောက်ပါ ပစ္စည်းများကို"; drawDashedLine(60, subY+2, 750 - ctx.measureText(subT).width - 10); ctx.fillText(subT, 750 - ctx.measureText(subT).width, subY); 
+        ctx.fillText("လက်ခံ/ထုတ်ပေး/သုံးကုန်/လွှဲပြောင်း/ဖျက်ဆီးပြီးပါကြောင်း။", 60, subY + lineSpacing);
+        const tTop = subY + lineSpacing + 15, tLeft = 60, tRight = 750, tHeight = 620; ctx.strokeRect(tLeft, tTop, tRight - tLeft, tHeight);
+        ctx.beginPath(); ctx.moveTo(tLeft, tTop+55); ctx.lineTo(tRight, tTop+55); ctx.stroke(); ctx.beginPath(); ctx.moveTo(480, tTop+27); ctx.lineTo(tRight, tTop+27); ctx.stroke();
+        [145, 400, 480, 570, 660].forEach(x => { ctx.beginPath(); if(x>480) ctx.moveTo(x, tTop+27); else ctx.moveTo(x, tTop); ctx.lineTo(x, tTop+tHeight); ctx.stroke(); });
+        ctx.font="bold 11px sans-serif"; ctx.fillText("လယ်ဂျာ /", 85, tTop+18); ctx.fillText("စာမျက်နှာ /", 80, tTop+33); ctx.fillText("အမှတ်", 92, tTop+48);
+        ctx.font="bold 12px sans-serif"; ctx.fillText("ပစ္စည်းအမည်", 240, tTop+35); ctx.fillText("ရေတွက်ပုံ", 415, tTop+35); ctx.fillText("အရေအတွက်", 580, tTop+18);
+        ctx.font="bold 10px sans-serif"; ctx.fillText("စုစုပေါင်း", 505, tTop+45); ctx.fillText("ကောင်း", 600, tTop+45); ctx.fillText("မကောင်း", 685, tTop+45);
         d.items.forEach((it, i) => { 
-            let y = tT + 75 + (i * 25); ctx.font="12px sans-serif"; 
-            ctx.fillText(mmNum(it.l), 105 - ctx.measureText(mmNum(it.l)).width/2, y); 
-            ctx.fillText(it.n, 155, y); 
-            ctx.fillText(it.u, 440 - ctx.measureText(it.u).width/2, y); 
-            ctx.fillText(mmNum(it.q), 530 - ctx.measureText(mmNum(it.q)).width/2, y); 
-            ctx.fillText(mmNum(it.q), 615 - ctx.measureText(mmNum(it.q)).width/2, y); 
-            ctx.fillText(mmNum(it.q), 705 - ctx.measureText(mmNum(it.q)).width/2, y); 
+            let y = tTop + 75 + (i * 25); ctx.font="12px sans-serif"; ctx.fillText(mmNumInput(it.l), 145 - ctx.measureText(mmNumInput(it.l)).width/2 - 42, y); ctx.fillText(it.n, 155, y); ctx.fillText(it.u, 400 + (480-400)/2 - ctx.measureText(it.u).width/2, y); 
+            let totalX = 480 + (570-480)/2 + 10; ctx.fillText(mmNumInput(it.q), totalX - ctx.measureText(mmNumInput(it.q)).width, y); 
+            let goodX = 570 + (660-570)/2 + 12; ctx.fillText(mmNumInput(it.q), goodX - ctx.measureText(mmNumInput(it.q)).width, y); ctx.fillText("-", 660 + (750-660)/2 - ctx.measureText("-").width/2, y); 
         });
-
-        ctx.font="bold 13px sans-serif"; ctx.fillText("မှတ်ချက်။ " + d.remark, 100, tT + 400);
-        ctx.fillText("တပ် ခွဲ မှူး လက် မှတ်", 160, tT + 465); ctx.fillText("ထပ် ဆင့် လက် မှတ်", 550, tT + 465);
-
-        const lbs = ["(လက်မှတ်)", "အဆင့်/အမည်", "ကိုယ်ပိုင်အမှတ်", "နေရာ", "ရက်စွဲ"];
-        lbs.forEach((l, i) => { 
-            let y = 970 + (i * 23); ctx.font="13px sans-serif"; ctx.fillText(l, 60, y); drawDashedLine(150, y+2, 385); 
-            ctx.fillText(l.replace(/[()]/g,""), 415, y); drawDashedLine(505, y+2, 750); 
+        ctx.font="bold 13px sans-serif"; const totalT = `(စုစုပေါင်းပစ္စည်း ( ${mmNumInput(d.items.length)} ) မျိုးတည်းသာ)`; ctx.fillText(totalT, (800 - ctx.measureText(totalT).width) / 2, tTop + 340); 
+        ctx.font="13px sans-serif"; const remarkFull = "မှတ်ချက်။ " + d.remark; ctx.fillText(remarkFull, (800 - ctx.measureText(remarkFull).width) / 2, tTop + 400);
+        ctx.fillText("တပ် ခွဲ မှူး လက် မှတ်", 160, tTop + 465); ctx.fillText("ထပ် ဆင့် လက် မှတ်", 550, tTop + 465);
+        ctx.font="900 13px sans-serif"; let confirmY = tTop + tHeight + 25; 
+        ctx.fillText("အထက်ပါပစ္စည်းများကိုထုတ်ပေးစာရင်းသွင်းပြီးကြောင်း", 60, confirmY); ctx.fillText("အတည်ပြုသည်။", 60, confirmY + 20);
+        ctx.fillText("အထက်ပါပစ္စည်းများကိုလက်ခံစာရင်းသွင်းပြီးကြောင်း", 415, confirmY); ctx.fillText("အတည်ပြုသည်။", 415, confirmY + 20);
+        const labels = ["(လက်မှတ်)", "အဆင့်/အမည်", "ကိုယ်ပိုင်အမှတ်", "နေရာ", "ရက်စွဲ"];
+        labels.forEach((l, i) => { 
+            let y = 970 + (i * 23); ctx.font="13px sans-serif"; ctx.fillText(l, 60, y); drawDashedLine(150, y+2, 385); ctx.fillText(l.replace(/[()]/g,""), 415, y); drawDashedLine(505, y+2, 750); 
             ctx.font="bold 13px sans-serif"; 
-            if(type==='OUT'){ if(i===1){ctx.fillText(d.keeper.rank+" "+d.keeper.name,160,y-4);ctx.fillText(d.p.rank+" "+d.p.name,515,y-4);} if(i===2){ctx.fillText(d.keeper.serial,160,y-4);ctx.fillText(d.p.serial,515,y-4);} } 
+            if(type === 'OUT'){ if(i===1){ctx.fillText(d.keeper.rank+" "+d.keeper.name,160,y-4);ctx.fillText(d.p.rank+" "+d.p.name,515,y-4);} if(i===2){ctx.fillText(d.keeper.serial,160,y-4);ctx.fillText(d.p.serial,515,y-4);} } 
             else { if(i===1){ctx.fillText(d.p.rank+" "+d.p.name,160,y-4);ctx.fillText(d.keeper.rank+" "+d.keeper.name,515,y-4);} if(i===2){ctx.fillText(d.p.serial,160,y-4);ctx.fillText(d.keeper.serial,515,y-4);} } 
-            if(i===3){ctx.fillText("သတရ(၇၀၁၀)",160,y-4);ctx.fillText("သတရ(၇၀၁၀)",515,y-4);} if(i===4){ctx.fillText(d.date,160,y-4);ctx.fillText(d.date,515,y-4);} 
+            if(i===3){ctx.fillText("သတရ(၇၀၁၀)၊ ခွဲ(၂)လက်နက်တိုက်",160,y-4);ctx.fillText("သတရ(၇၀၁၀)၊ ခွဲ(၂)လက်နက်တိုက်",515,y-4);} if(i===4){ctx.fillText(d.date,160,y-4);ctx.fillText(d.date,515,y-4);} 
         });
-        ctx.font="13px sans-serif"; ctx.fillText("ထောက် - ၄ (ကြီး)", 60, 1105);
+        ctx.font="13px sans-serif"; ctx.fillText("ထောက် - ၄ (ကြီး)", 60, 1105); ctx.fillText("(ရှင်းလင်းချက်ကျောဘက်တွင်ကြည့်)", 750 - ctx.measureText("(ရှင်းလင်းချက်ကျောဘက်တွင်ကြည့်)").width, 1105);
     }
-
     function downloadImage() { const link = document.createElement('a'); link.download = 'Voucher_' + Date.now() + '.png'; link.href = canvas.toDataURL('image/png', 1.0); link.click(); }
     function exportJSON() { const data = { map: mappingList, out: outList, his: historyList, stock: stockMaster }; const blob = new Blob([JSON.stringify(data)], {type: 'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `Armory_Backup_${Date.now()}.json`; a.click(); }
     function importJSON(e) { const reader = new FileReader(); reader.onload = (ev) => { const data = JSON.parse(ev.target.result); mappingList = data.map || []; outList = data.out || []; historyList = data.his || []; stockMaster = data.stock || stockMaster; localStorage.setItem('map', JSON.stringify(mappingList)); localStorage.setItem('out', JSON.stringify(outList)); localStorage.setItem('his', JSON.stringify(historyList)); localStorage.setItem('stockMaster', JSON.stringify(stockMaster)); location.reload(); }; reader.readAsText(e.target.files[0]); }
