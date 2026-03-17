@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>လက်နက်ခဲယမ်း စီမံခန့်ခွဲရေး - ဆရာသန့်ဇင်မျိုး</title>
+    <title>လက်နက်ခဲယမ်း စီမံခန့်ခွဲရေး</title>
     <style>
         :root { --primary: #2563eb; --bg: #f1f5f9; --card: #ffffff; --text: #1e293b; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
@@ -61,11 +61,11 @@
 <div class="container">
     <div id="mappingPage" class="page active">
         <div class="card">
-            <h3>လက်နက်တိုက်တာဝန်ခံ</h3>
+            <h3>တပ်ခွဲမှူး/တပ်စုမှူး</h3>
             <div class="form-grid">
-                <div class="form-group"><label>ကိုယ်ပိုင်အမှတ်</label><input type="text" id="k_serial" value="တ-၂၆၁၃၈၈"></div>
-                <div class="form-group"><label>အဆင့်</label><input type="text" id="k_rank" value="အရခဗ"></div>
-                <div class="form-group"><label>အမည်</label><input type="text" id="k_name" value="သန့်ဇင်မျိုး"></div>
+                <div class="form-group"><label>ကိုယ်ပိုင်အမှတ်</label><input type="text" id="k_serial" value="ကြည်း၇၅၉၅၉"></div>
+                <div class="form-group"><label>အဆင့်</label><input type="text" id="k_rank" value="ဗိုလ်ကြီး"></div>
+                <div class="form-group"><label>အမည်</label><input type="text" id="k_name" value="‌‌နိုင်လင်းထွန်း "></div>
             </div>
             <hr style="margin: 20px 0; border: 0.5px solid #eee;">
             <h3>၁။ လူနှင့် လက်နက်တွဲဖက်မှု</h3>
@@ -317,7 +317,7 @@
         
         ctx.font="bold 13px sans-serif"; const totalT = `(စုစုပေါင်းပစ္စည်း ( ${mmNumInput(rowIndex)} ) မျိုးတည်းသာ)`; ctx.fillText(totalT, (800 - ctx.measureText(totalT).width) / 2, tTop + 340); 
         ctx.font="13px sans-serif"; const remarkFull = "မှတ်ချက်။ " + d.remark; ctx.fillText(remarkFull, (800 - ctx.measureText(remarkFull).width) / 2, tTop + 400);
-        ctx.fillText("တပ် ခွဲ မှူး လက် မှတ်", 160, tTop + 465); ctx.fillText("ထပ် ဆင့် လက် မှတ်", 550, tTop + 465);
+        ctx.fillText("ထပ် ဆင့် လက် မှတ်", 550, tTop + 465);
         ctx.font="900 13px sans-serif"; let confirmY = tTop + tHeight + 25; 
         ctx.fillText("အထက်ပါပစ္စည်းများကိုထုတ်ပေးစာရင်းသွင်းပြီးကြောင်း", 60, confirmY); ctx.fillText("အတည်ပြုသည်။", 60, confirmY + 20);
         ctx.fillText("အထက်ပါပစ္စည်းများကိုလက်ခံစာရင်းသွင်းပြီးကြောင်း", 415, confirmY); ctx.fillText("အတည်ပြုသည်။", 415, confirmY + 20);
