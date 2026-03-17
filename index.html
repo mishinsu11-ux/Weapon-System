@@ -212,7 +212,12 @@
     function processIO(type) {
         const pId = document.getElementById('io_person').value; if(!pId) return;
         const p = mappingList.find(m => m.id == pId);
-        let items = []; document.querySelectorAll('.io-n').forEach((n, i) => items.push({ n: n.value, l: document.querySelectorAll('.io-l')[i].value, u: document.querySelectorAll('.io-u')[i].value, q: document.querySelectorAll('.io-q')[i].value }));
+        let items = []; 
+        document.querySelectorAll('.io-n').forEach((n, i) => {
+            if(n.value.trim() !== "") { 
+                items.push({ n: n.value, l: document.querySelectorAll('.io-l')[i].value, u: document.querySelectorAll('.io-u')[i].value, q: document.querySelectorAll('.io-q')[i].value });
+            }
+        });
         const editId = document.getElementById('edit_io_id').value;
         const entry = { id: editId ? parseInt(editId) : Date.now(), p, keeper: { serial: document.getElementById('k_serial').value, rank: document.getElementById('k_rank').value, name: document.getElementById('k_name').value }, date: document.getElementById('io_date').value, purpose: document.getElementById('io_purpose').value, remark: type === 'OUT' ? (document.getElementById('io_purpose').value + (document.getElementById('io_location').value ? " ("+document.getElementById('io_location').value+")" : "") + " အတွက်ထုတ်ပေးခြင်းဖြစ်ပါသည်။") : "တာဝန်ပြီးဆုံး၍ ပြန်လည်အပ်နှံခြင်းဖြစ်ပါသည်။", type, items };
         if(editId) {
@@ -245,11 +250,14 @@
         const keys = ['ma1', 'ma3', 'ma13', 'am9', 'am556', 'mag13', 'mag13_2', 'bay1', 'bay13', 'str13', 'str13_2'];
         const pTypes = ['စစ်ဆင်ရေး', 'လုံခြုံရေး', 'ကင်းတာဝန်', 'သင်တန်း', 'စစ်ရေးပြ', 'လှုပ်ရှား', 'အခြား'];
         let subTotals = {}; pTypes.forEach(t => subTotals[t] = { ma1:0, ma3:0, ma13:0, am9:0, am556:0, mag13:0, mag13_2:0, bay1:0, bay13:0, str13:0, str13_2:0 });
+        
+        // totalIssued key error ပြင်ဆင်ပြီး
         let totalIssued = { ma1:0, ma3:0, ma13:0, am9:0, am556:0, mag13:0, mag13_2:0, bay1:0, bay13:0, str13:0, str13_2:0 };
+        
         outList.forEach(out => { 
             let pt = pTypes.includes(out.purpose) ? out.purpose : 'အခြား';
             out.items.forEach(it => { 
-                let k = ''; const n = it.n, qty = parseInt(toEn(it.q)) || 0;
+                let k = ''; const n = it.n; const qty = parseInt(toEn(it.q)) || 0;
                 if(n.includes("အမ်အေ-၁") && !n.includes("၁၃") && !n.includes("ကျည်အိမ်") && !n.includes("လှံစွပ်") && !n.includes("လွယ်ကြိုး")) k='ma1'; 
                 else if(n.includes("အမ်အေ-၃")) k='ma3'; 
                 else if(n.includes("အမ်အေ-၁၃") && !n.includes("ကျည်အိမ်") && !n.includes("လှံစွပ်") && !n.includes("လွယ်ကြိုး")) k='ma13';
@@ -292,12 +300,22 @@
         ctx.font="bold 11px sans-serif"; ctx.fillText("လယ်ဂျာ /", 85, tTop+18); ctx.fillText("စာမျက်နှာ /", 80, tTop+33); ctx.fillText("အမှတ်", 92, tTop+48);
         ctx.font="bold 12px sans-serif"; ctx.fillText("ပစ္စည်းအမည်", 240, tTop+35); ctx.fillText("ရေတွက်ပုံ", 415, tTop+35); ctx.fillText("အရေအတွက်", 580, tTop+18);
         ctx.font="bold 10px sans-serif"; ctx.fillText("စုစုပေါင်း", 505, tTop+45); ctx.fillText("ကောင်း", 600, tTop+45); ctx.fillText("မကောင်း", 685, tTop+45);
-        d.items.forEach((it, i) => { 
-            let y = tTop + 75 + (i * 25); ctx.font="12px sans-serif"; ctx.fillText(mmNumInput(it.l), 145 - ctx.measureText(mmNumInput(it.l)).width/2 - 42, y); ctx.fillText(it.n, 155, y); ctx.fillText(it.u, 400 + (480-400)/2 - ctx.measureText(it.u).width/2, y); 
-            let totalX = 480 + (570-480)/2 + 10; ctx.fillText(mmNumInput(it.q), totalX - ctx.measureText(mmNumInput(it.q)).width, y); 
-            let goodX = 570 + (660-570)/2 + 12; ctx.fillText(mmNumInput(it.q), goodX - ctx.measureText(mmNumInput(it.q)).width, y); ctx.fillText("-", 660 + (750-660)/2 - ctx.measureText("-").width/2, y); 
+        
+        let rowIndex = 0;
+        d.items.forEach((it) => { 
+            if(it.n && it.n.trim() !== "") { 
+                let y = tTop + 75 + (rowIndex * 25); 
+                ctx.font="12px sans-serif"; 
+                ctx.fillText(mmNumInput(it.l), 145 - ctx.measureText(mmNumInput(it.l)).width/2 - 42, y); 
+                ctx.fillText(it.n, 155, y); 
+                ctx.fillText(it.u, 400 + (480-400)/2 - ctx.measureText(it.u).width/2, y); 
+                let totalX = 480 + (570-480)/2 + 10; ctx.fillText(mmNumInput(it.q), totalX - ctx.measureText(mmNumInput(it.q)).width, y); 
+                let goodX = 570 + (660-570)/2 + 12; ctx.fillText(mmNumInput(it.q), goodX - ctx.measureText(mmNumInput(it.q)).width, y); ctx.fillText("-", 660 + (750-660)/2 - ctx.measureText("-").width/2, y); 
+                rowIndex++;
+            }
         });
-        ctx.font="bold 13px sans-serif"; const totalT = `(စုစုပေါင်းပစ္စည်း ( ${mmNumInput(d.items.length)} ) မျိုးတည်းသာ)`; ctx.fillText(totalT, (800 - ctx.measureText(totalT).width) / 2, tTop + 340); 
+        
+        ctx.font="bold 13px sans-serif"; const totalT = `(စုစုပေါင်းပစ္စည်း ( ${mmNumInput(rowIndex)} ) မျိုးတည်းသာ)`; ctx.fillText(totalT, (800 - ctx.measureText(totalT).width) / 2, tTop + 340); 
         ctx.font="13px sans-serif"; const remarkFull = "မှတ်ချက်။ " + d.remark; ctx.fillText(remarkFull, (800 - ctx.measureText(remarkFull).width) / 2, tTop + 400);
         ctx.fillText("တပ် ခွဲ မှူး လက် မှတ်", 160, tTop + 465); ctx.fillText("ထပ် ဆင့် လက် မှတ်", 550, tTop + 465);
         ctx.font="900 13px sans-serif"; let confirmY = tTop + tHeight + 25; 
