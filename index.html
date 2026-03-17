@@ -205,7 +205,7 @@
         const p = mappingList.find(m => m.id == id);
         const area = document.getElementById('items_area'); document.getElementById('io_details').style.display = 'block';
         const isMA13 = p.type.includes('၁၃');
-        const items = [{n: p.type + " ("+p.wNo+")", l: '၁', u: 'လက်', q: '၁'}, {n: isMA13 ? '၉ မမကျည်' : '၅.၅၆ မမကျည်', l: '၂', u: 'တောင့်', q: isMA13 ? '၂၄၀' : '၁၇၀'}, {n: isMA13 ? 'အမ်အေ-၁၃ ကျည်အိမ်' : 'အမ်အေ-၁/၃ ကျည်အိမ်', l: '၃', u: 'ခု', q: isMA13 ? '၅' : '၃'}, {n: isMA13 ? 'အမ်အေ-၁၃ လှံစွပ်' : 'အမ်အေ-၁ လှံစွပ်', l: '၅', u: 'ချောင်း', q: '၁'}, {n: isMA13 ? 'အမ်အေ-၁၃ လွယ်ကြိုး' : 'အမ်အေ-၁/၃ လွယ်ကြိုး', l: '၄', u: 'ချောင်း', q: '၁'}];
+        const items = [{n: p.type + " ("+p.wNo+")", l: '၁', u: 'လက်', q: '၁'}, {n: isMA13 ? '၉ မမကျည်' : '၅.၅၆ မမကျည်', l: '၂', u: 'တောင့်', q: isMA13 ? '၂၄၀' : '၁၇၀'}, {n: isMA13 ? 'အမ်အေ-၁၃ ကျည်အိမ်' : 'အမ်အေ-၁/၃ ကျည်အိမ်', l: '၃', u: 'ခု', q: isMA13 ? '၅' : '၃'}, {n: isMA13 ? 'အမ်အေ-၁၃ လှံစွပ်' : 'အမ်အေ-၁ လှံစွပ်', l: '၄', u: 'ချောင်း', q: '၁'}, {n: isMA13 ? 'အမ်အေ-၁၃ လွယ်ကြိုး' : 'အမ်အေ-၁/၃ လွယ်ကြိုး', l: '၅', u: 'ချောင်း', q: '၁'}];
         area.innerHTML = items.map(it => `<div class="card" style="padding:10px; margin-bottom:5px; background:#f8fafc; border:1px solid #e2e8f0;"><div class="form-grid"><div class="form-group"><label>ပစ္စည်း</label><input type="text" class="io-n" value="${it.n}"></div><div class="form-group"><label>လယ်ဂျာ</label><input type="text" class="io-l" value="${it.l}"></div><div class="form-group"><label>အရေအတွက် (${it.u})</label><input type="text" class="io-q" value="${mmNumInput(it.q)}"></div><input type="hidden" class="io-u" value="${it.u}"></div></div>`).join('');
     }
 
