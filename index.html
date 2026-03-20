@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>လက်နက်ခဲယမ်း စီမံခန့်ခွဲရေး</title>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
     <style>
         :root { --primary: #2563eb; --bg: #f1f5f9; --card: #ffffff; --text: #1e293b; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
@@ -28,9 +30,12 @@
         .btn-edit { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; margin-right: 5px; padding: 5px 10px; font-size: 12px; }
         .btn-delete { background: #fee2e2; color: #ef4444; border: 1px solid #fecaca; padding: 5px 10px; font-size: 12px; }
         .btn-print { background: #10b981; color: white; padding: 5px 10px; font-size: 12px; }
+        .btn-upload { background: #8b5cf6; color: white; padding: 5px 10px; font-size: 12px; margin-top: 5px; }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; min-width: 600px; }
         th, td { border: 1px solid #e2e8f0; padding: 10px; text-align: center; font-size: 0.9rem; }
         th { background: #f8fafc; }
+        .v-img { width: 45px; height: 45px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd; cursor: pointer; }
+        .loading-text { font-size: 10px; color: #f59e0b; font-weight: bold; }
         .table-container { overflow-x: auto; background: white; border-radius: 8px; padding: 10px; }
         .dash-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 1300px; }
         .dash-table th, .dash-table td { border: 1px solid #ccc; padding: 8px; text-align: center; }
@@ -38,6 +43,8 @@
         .input-inline { width: 55px; text-align: center; border: 1px solid #94a3b8; padding: 4px; border-radius: 4px; }
         #canvasOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; overflow-y: auto; text-align: center; padding: 20px 0; display: none; }
         canvas { background: white; max-width: 95%; height: auto; margin-bottom: 20px; box-shadow: 0 0 30px rgba(0,0,0,0.7); border: 2px solid #ccc; }
+        #imgModal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; z-index:3000; text-align:center; padding-top:50px; }
+        #imgModal img { max-width:90%; max-height:80vh; border:3px solid white; }
     </style>
 </head>
 <body>
@@ -46,7 +53,7 @@
     <div class="app-logo">
         <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M120 220H320V260H220L200 320H150L170 260H120V220Z" fill="#E2E8F0"/><rect x="220" y="210" width="100" height="15" rx="2" fill="#CBD5E1"/><path d="M320 225L380 235V245L320 255V225Z" fill="#94A3B8"/><rect x="300" y="300" width="15" height="40" rx="2" fill="#B58900"/><path d="M300 300C300 285 315 285 315 300V305H300V300Z" fill="#D4AF37"/><rect x="330" y="300" width="15" height="40" rx="2" fill="#B58900"/><path d="M330 300C330 285 345 285 345 300V305H330V300Z" fill="#D4AF37"/></svg>
     </div>
-    <div class="app-title">လက်နက်ခဲယမ်း စီမံခန့်ခွဲမှုစနစ်</div>
+    <div class="app-title">လက်နက်ခဲယမ်း စီမံခန့်ခွဲမှုစနစ် (Cloud Storage)</div>
 </header>
 
 <div class="tabs">
@@ -114,12 +121,12 @@
 
     <div id="outListPage" class="page">
         <h3>၃။ လက်ရှိထုတ်ယူထားသော စာရင်း</h3>
-        <div style="overflow-x:auto;"><table id="outTable"><thead><tr><th>ရက်စွဲ</th><th>ကိုယ်ပိုင်အမှတ်</th><th>အမည်</th><th>လက်နက်နံပါတ်</th><th>အကြောင်းအရာ</th><th>ထုတ်ယူသည့်ပစ္စည်း</th><th>ပြင်/ပြေစာ/ဖျက်</th></tr></thead><tbody></tbody></table></div>
+        <div style="overflow-x:auto;"><table id="outTable"><thead><tr><th>ရက်စွဲ</th><th>ကိုယ်ပိုင်အမှတ်</th><th>အမည်</th><th>လက်နက်နံပါတ်</th><th>ထုတ်ယူသည့်ပစ္စည်း</th><th>ပြေစာပုံ (Cloud)</th><th>ပြင်/ပြေစာ/ဖျက်</th></tr></thead><tbody></tbody></table></div>
     </div>
 
     <div id="historyPage" class="page">
         <h3>၄။ အပ်နှံမှုမှတ်တမ်း (History)</h3>
-        <div style="overflow-x:auto;"><table id="historyTable"><thead><tr><th>ရက်စွဲ</th><th>ကိုယ်ပိုင်အမှတ်</th><th>အမည်</th><th>လက်နက်နံပါတ်</th><th>အမျိုးအစား</th><th>မှတ်ချက်</th><th>ပြင်/ပြေစာ/ဖျက်</th></tr></thead><tbody></tbody></table></div>
+        <div style="overflow-x:auto;"><table id="historyTable"><thead><tr><th>ရက်စွဲ</th><th>ကိုယ်ပိုင်အမှတ်</th><th>အမည်</th><th>လက်နက်နံပါတ်</th><th>အမျိုးအစား</th><th>ပြေစာပုံ (Cloud)</th><th>ပြင်/ပြေစာ/ဖျက်</th></tr></thead><tbody></tbody></table></div>
     </div>
 
     <div id="dashPage" class="page">
@@ -156,7 +163,29 @@
     <canvas id="voucherCanvas" width="1600" height="2262"></canvas>
 </div>
 
+<div id="imgModal">
+    <img id="modalImg" src="">
+    <div style="margin-top:20px;">
+        <button class="btn btn-print" id="imgDownloadBtn" onclick="downloadFirebaseImg()">Download ရယူမည်</button>
+        <button class="btn" style="background:#ef4444; color:white;" onclick="document.getElementById('imgModal').style.display='none'">ပိတ်မည်</button>
+    </div>
+</div>
+
 <script>
+    // --- STEP 1: Firebase Config (ဆရာ့ Key များ အပြည့်အစုံ ပြန်ထည့်ပါ) ---
+    const firebaseConfig = {
+        apiKey: "AIzaSyDP0usUxYYJeMknWweDUZJlm6J_CUV12W4", 
+        authDomain: "armory-management-5604f.firebaseapp.com",
+        projectId: "armory-management-5604f",
+        storageBucket: "armory-management-5604f.firebasestorage.app",
+        messagingSenderId: "928894244424",
+        appId: "1:928894244424:web:7f72a8e8e5c41986e86a7d"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+
+    // Data Initialization
     let mappingList = JSON.parse(localStorage.getItem('map')) || [];
     let outList = JSON.parse(localStorage.getItem('out')) || [];
     let historyList = JSON.parse(localStorage.getItem('his')) || [];
@@ -166,17 +195,57 @@
         loss: { ma1:0, ma3:0, ma13:0, am9:0, am556:0, mag13:0, mag13_2:0, bay1:0, bay13:0, str13:0, str13_2:0 }
     };
 
-    const mmNum = (n) => {
-        if (n === 0 || n === "0" || n === "") return ""; 
-        return String(n).replace(/[0-9]/g, d => "၀၁၂၃၄၅၆၇၈၉"[d]);
-    };
-    
+    const mmNum = (n) => (n === 0 || n === "0" || n === "") ? "" : String(n).replace(/[0-9]/g, d => "၀၁၂၃၄၅၆၇၈၉"[d]);
     const mmNumInput = (n) => (n === 0 || n === "0" || n === "") ? "၀" : String(n).replace(/[0-9]/g, d => "၀၁၂၃၄၅၆၇၈၉"[d]);
     const toEn = (s) => String(s).replace(/[၀-၉]/g, d => "0123456789"["၀၁၂၃၄၅၆၇၈၉".indexOf(d)]);
     const getToday = () => { const d = new Date(); return `${mmNumInput(d.getDate())}-${mmNumInput(d.getMonth()+1)}-${mmNumInput(d.getFullYear())}`; };
 
     window.onload = () => { renderMap(); renderOut(); renderHistory(); document.getElementById('io_date').value = getToday(); };
 
+    // --- UPDATED: Image Upload Function (Gallery + Camera Support) ---
+    async function uploadVoucherPhoto(id, type) {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file'; 
+        fileInput.accept = 'image/*'; // jpg, png, etc ရွေးလို့ရအောင်
+
+        fileInput.onchange = async (e) => {
+            const file = e.target.files[0]; if(!file) return;
+            const list = (type === 'OUT') ? outList : historyList;
+            const idx = list.findIndex(item => item.id == id);
+            if(idx === -1) return;
+
+            // Naming logic: Rank_Name_Timestamp
+            const fileName = `${type}_${list[idx].p.rank}_${list[idx].p.name}_${Date.now()}.jpg`;
+            const storageRef = storage.ref(`vouchers/${fileName}`);
+            
+            document.getElementById(`upload_status_${id}`).innerHTML = '<span class="loading-text">ပို့နေသည်...</span>';
+
+            try {
+                const snapshot = await storageRef.put(file);
+                const url = await snapshot.ref.getDownloadURL();
+                list[idx].voucherImg = url;
+                localStorage.setItem((type==='OUT'?'out':'his'), JSON.stringify(list));
+                alert("ပုံတင်ခြင်း အောင်မြင်ပါသည်။");
+                (type==='OUT') ? renderOut() : renderHistory();
+            } catch (err) {
+                console.error(err);
+                alert("အင်တာနက် လိုင်းမကောင်းပါ။ ခဏနေမှ ပြန်ကြိုးစားပါ။");
+                document.getElementById(`upload_status_${id}`).innerHTML = `<button class="btn btn-upload" onclick="uploadVoucherPhoto(${id},'${type}')">ပြန်ပို့ရန်</button>`;
+            }
+        };
+        fileInput.click();
+    }
+
+    // Modal Control
+    let currentVoucherUrl = "";
+    function openImgModal(url) { 
+        currentVoucherUrl = url;
+        document.getElementById('modalImg').src = url; 
+        document.getElementById('imgModal').style.display='block'; 
+    }
+    function downloadFirebaseImg() { window.open(currentVoucherUrl, '_blank'); }
+
+    // Logic Functions (Original)
     function showPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -241,17 +310,33 @@
         else { document.getElementById('btn_out').style.display='none'; document.getElementById('btn_in').style.display='block'; }
     }
 
-    function renderOut() { document.querySelector('#outTable tbody').innerHTML = outList.map(o => `<tr><td>${o.date}</td><td>${o.p.serial}</td><td>${o.p.rank} ${o.p.name}</td><td>${o.p.wNo}</td><td>${o.purpose}</td><td style="text-align:left; font-size:11px;">${o.items.map(i => i.n+':'+mmNumInput(i.q)).join('<br>')}</td><td><button class="btn btn-edit" onclick="editIO(${o.id},'OUT')">ပြင်</button><button class="btn btn-print" onclick="initVoucher(${o.id}, 'OUT')">ပြေစာ</button><button class="btn btn-delete" onclick="delOut(${o.id})">X</button></td></tr>`).join(''); }
+    function renderOut() { 
+        document.querySelector('#outTable tbody').innerHTML = outList.map(o => `<tr>
+            <td>${o.date}</td><td>${o.p.serial}</td><td>${o.p.rank} ${o.p.name}</td><td>${o.p.wNo}</td>
+            <td style="text-align:left; font-size:11px;">${o.items.map(i => i.n+':'+mmNumInput(i.q)).join('<br>')}</td>
+            <td id="upload_status_${o.id}">
+                ${o.voucherImg ? `<img src="${o.voucherImg}" class="v-img" onclick="openImgModal('${o.voucherImg}')">` : `<button class="btn btn-upload" onclick="uploadVoucherPhoto(${o.id},'OUT')">ပုံရိုက်ရန်</button>`}
+            </td>
+            <td><button class="btn btn-edit" onclick="editIO(${o.id},'OUT')">ပြင်</button><button class="btn btn-print" onclick="initVoucher(${o.id}, 'OUT')">ပြေစာ</button><button class="btn btn-delete" onclick="delOut(${o.id})">X</button></td>
+        </tr>`).join(''); 
+    }
     function delOut(id) { if(confirm('ဖျက်မှာသေချာလား?')) { outList = outList.filter(o => o.id !== id); localStorage.setItem('out', JSON.stringify(outList)); renderOut(); } }
-    function renderHistory() { document.querySelector('#historyTable tbody').innerHTML = historyList.map(h => `<tr><td>${h.date}</td><td>${h.p.serial}</td><td>${h.p.name}</td><td>${h.p.wNo}</td><td>${h.type}</td><td>${h.remark}</td><td><button class="btn btn-edit" onclick="editIO(${h.id},'IN')">ပြင်</button><button class="btn btn-print" onclick="initVoucher(${h.id}, 'IN')">ပြေစာ</button><button class="btn btn-delete" onclick="delH(${h.id})">X</button></td></tr>`).join(''); }
+    
+    function renderHistory() { 
+        document.querySelector('#historyTable tbody').innerHTML = historyList.map(h => `<tr>
+            <td>${h.date}</td><td>${h.p.serial}</td><td>${h.p.rank} ${h.p.name}</td><td>${h.p.wNo}</td><td>${h.type}</td>
+            <td id="upload_status_${h.id}">
+                ${h.voucherImg ? `<img src="${h.voucherImg}" class="v-img" onclick="openImgModal('${h.voucherImg}')">` : `<button class="btn btn-upload" onclick="uploadVoucherPhoto(${h.id},'IN')">ပုံရိုက်ရန်</button>`}
+            </td>
+            <td><button class="btn btn-edit" onclick="editIO(${h.id},'IN')">ပြင်</button><button class="btn btn-print" onclick="initVoucher(${h.id}, 'IN')">ပြေစာ</button><button class="btn btn-delete" onclick="delH(${h.id})">X</button></td>
+        </tr>`).join(''); 
+    }
     function delH(id) { if(confirm('ဖျက်မှာသေချာလား?')) { historyList = historyList.filter(h => h.id !== id); localStorage.setItem('his', JSON.stringify(historyList)); renderHistory(); } }
 
     function renderDashboard() {
         const keys = ['ma1', 'ma3', 'ma13', 'am9', 'am556', 'mag13', 'mag13_2', 'bay1', 'bay13', 'str13', 'str13_2'];
         const pTypes = ['စစ်ဆင်ရေး', 'လုံခြုံရေး', 'ကင်းတာဝန်', 'သင်တန်း', 'စစ်ရေးပြ', 'လှုပ်ရှား', 'အခြား'];
         let subTotals = {}; pTypes.forEach(t => subTotals[t] = { ma1:0, ma3:0, ma13:0, am9:0, am556:0, mag13:0, mag13_2:0, bay1:0, bay13:0, str13:0, str13_2:0 });
-        
-        // totalIssued key error ပြင်ဆင်ပြီး
         let totalIssued = { ma1:0, ma3:0, ma13:0, am9:0, am556:0, mag13:0, mag13_2:0, bay1:0, bay13:0, str13:0, str13_2:0 };
         
         outList.forEach(out => { 
@@ -277,6 +362,7 @@
     }
     function updateStock(key, field, val) { stockMaster[key][field] = parseInt(toEn(val)) || 0; localStorage.setItem('stockMaster', JSON.stringify(stockMaster)); renderDashboard(); }
 
+    // Canvas Voucher Logic (Original)
     const canvas = document.getElementById('voucherCanvas'); const ctx = canvas.getContext('2d');
     function initVoucher(id, type) { let d = (type === 'OUT') ? outList.find(o => o.id == id) : historyList.find(h => h.id == id); if(!d) return; document.getElementById('canvasOverlay').style.display = 'block'; drawVoucher(d, type); }
     function drawDashedLine(x1, y1, x2) { ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y1); ctx.stroke(); ctx.setLineDash([]); }
@@ -331,6 +417,7 @@
         });
         ctx.font="13px sans-serif"; ctx.fillText("ထောက် - ၄ (ကြီး)", 60, 1105); ctx.fillText("(ရှင်းလင်းချက်ကျောဘက်တွင်ကြည့်)", 750 - ctx.measureText("(ရှင်းလင်းချက်ကျောဘက်တွင်ကြည့်)").width, 1105);
     }
+
     function downloadImage() { const link = document.createElement('a'); link.download = 'Voucher_' + Date.now() + '.png'; link.href = canvas.toDataURL('image/png', 1.0); link.click(); }
     function exportJSON() { const data = { map: mappingList, out: outList, his: historyList, stock: stockMaster }; const blob = new Blob([JSON.stringify(data)], {type: 'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `Armory_Backup_${Date.now()}.json`; a.click(); }
     function importJSON(e) { const reader = new FileReader(); reader.onload = (ev) => { const data = JSON.parse(ev.target.result); mappingList = data.map || []; outList = data.out || []; historyList = data.his || []; stockMaster = data.stock || stockMaster; localStorage.setItem('map', JSON.stringify(mappingList)); localStorage.setItem('out', JSON.stringify(outList)); localStorage.setItem('his', JSON.stringify(historyList)); localStorage.setItem('stockMaster', JSON.stringify(stockMaster)); location.reload(); }; reader.readAsText(e.target.files[0]); }
