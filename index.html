@@ -46,7 +46,7 @@
     <div class="app-logo">
         <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M120 220H320V260H220L200 320H150L170 260H120V220Z" fill="#E2E8F0"/><rect x="220" y="210" width="100" height="15" rx="2" fill="#CBD5E1"/><path d="M320 225L380 235V245L320 255V225Z" fill="#94A3B8"/><rect x="300" y="300" width="15" height="40" rx="2" fill="#B58900"/><path d="M300 300C300 285 315 285 315 300V305H300V300Z" fill="#D4AF37"/><rect x="330" y="300" width="15" height="40" rx="2" fill="#B58900"/><path d="M330 300C330 285 345 285 345 300V305H330V300Z" fill="#D4AF37"/></svg>
     </div>
-    <div class="app-title">လက်နက်ခဲယမ်း စီမံခန့်ခွဲမှုစနစ် (Offline)</div>
+    <div class="app-title">လက်နက်ခဲယမ်း စီမံခန့်ခွဲမှုစနစ်</div>
 </header>
 
 <div class="tabs">
@@ -55,6 +55,7 @@
     <button class="tab-btn" onclick="showPage('outListPage')">ထုတ်စာရင်း</button>
     <button class="tab-btn" onclick="showPage('historyPage')">အပ်စာရင်း</button>
     <button class="tab-btn" onclick="showPage('dashPage')">အခြေပြဇယား</button>
+    <button class="tab-btn" onclick="showPage('wpStockPage')">လက်နက်လက်ကျန်</button>
     <button class="tab-btn" onclick="showPage('backupPage')">Backup</button>
 </div>
 
@@ -99,10 +100,10 @@
                 <div id="items_area"></div>
                 <div class="form-grid" style="margin-top:10px;">
                     <div class="form-group"><label>အကြောင်းအရာ</label>
-                        <select id="io_purpose"><option value="စစ်ဆင်ရေး">စစ်ဆင်ရေး</option><option value="လုံခြုံရေး">လုံခြုံရေး</option><option value="ကင်းတာဝန်">ကင်းတာဝန်</option><option value="သင်တန်း">သင်တန်း</option><option value="စစ်ရေးပြ">စစ်ရေးပြ</option><option value="လှုပ်ရှား">လှုပ်ရှား</option><option value="အခြား">အခြား</option></select>
+                        <select id="io_purpose" onchange="updateAutoRemark()"><option value="စစ်ဆင်ရေး">စစ်ဆင်ရေး</option><option value="လုံခြုံရေး">လုံခြုံရေး</option><option value="ကင်းတာဝန်">ကင်းတာဝန်</option><option value="သင်တန်း">သင်တန်း</option><option value="စစ်ရေးပြ">စစ်ရေးပြ</option><option value="လှုပ်ရှား">လှုပ်ရှား</option><option value="အခြား">အခြား</option></select>
                     </div>
-                    <div class="form-group"><label>တည်နေရာ</label><input type="text" id="io_location"></div>
-                    <div class="form-group"><label>မှတ်ချက်</label><input type="text" id="io_remark"></div>
+                    <div class="form-group"><label>တည်နေရာ</label><input type="text" id="io_location" oninput="updateAutoRemark()"></div>
+                    <div class="form-group" style="grid-column: span 2;"><label>မှတ်ချက် (Voucher တွင် တိုက်ရိုက်ပေါ်မည့်စာသား)</label><input type="text" id="io_remark"></div>
                 </div>
                 <div class="form-grid" style="margin-top:15px;">
                     <button id="btn_out" class="btn btn-add" style="background:#d97706;" onclick="processIO('OUT')">ထုတ်ယူမည်</button>
@@ -137,6 +138,26 @@
         </div>
     </div>
 
+    <div id="wpStockPage" class="page">
+        <div class="card">
+            <h3>စတိုရှိ လက်နက်လက်ကျန်စာရင်း (အမျိုးအစားအလိုက်)</h3>
+            <div class="table-container">
+                <table id="wpStockTable">
+                    <thead>
+                        <tr class="bg-header">
+                            <th>စဉ်</th>
+                            <th>ကိုယ်ပိုင်အမှတ်</th>
+                            <th>အဆင့် / အမည်</th>
+                            <th>လက်နက်အမျိုးအစား</th>
+                            <th>လက်နက်နံပါတ်</th>
+                        </tr>
+                    </thead>
+                    <tbody id="wpStockBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <div id="backupPage" class="page">
         <div class="card">
             <h3>ဒေတာ သိမ်းဆည်းရန် (JSON Backup)</h3>
@@ -166,7 +187,7 @@
         loss: { ma1:0, ma3:0, ma13:0, am9:0, am556:0, mag13:0, mag13_2:0, bay1:0, bay13:0, str13:0, str13_2:0 }
     };
 
-    const mmNum = (n) => (n === 0 || n === "0" || n === "") ? "" : String(n).replace(/[0-9]/g, d => "၀၁၂၃၄၅၆၇၈၉"[d]);
+    const mmNum = (n) => (n === 0 || n === "0" || n === "" || n === "၀") ? "" : String(n).replace(/[0-9]/g, d => "၀၁၂၃၄၅၆၇၈၉"[d]);
     const mmNumInput = (n) => (n === 0 || n === "0" || n === "") ? "၀" : String(n).replace(/[0-9]/g, d => "၀၁၂၃၄၅၆၇၈၉"[d]);
     const toEn = (s) => String(s).replace(/[၀-၉]/g, d => "0123456789"["၀၁၂၃၄၅၆၇၈၉".indexOf(d)]);
     const getToday = () => { const d = new Date(); return `${mmNumInput(d.getDate())}-${mmNumInput(d.getMonth()+1)}-${mmNumInput(d.getFullYear())}`; };
@@ -180,6 +201,7 @@
         document.querySelector(`[onclick="showPage('${id}')"]`).classList.add('active');
         if(id === 'ioPage') updateSel();
         if(id === 'dashPage') renderDashboard();
+        if(id === 'wpStockPage') renderWeaponStock();
     }
 
     function addMapping() {
@@ -197,13 +219,30 @@
     function delMap(id) { if(confirm('ဖျက်မှာသေချာလား?')) { mappingList = mappingList.filter(m => m.id !== id); localStorage.setItem('map', JSON.stringify(mappingList)); renderMap(); } }
 
     function updateSel() { const sel = document.getElementById('io_person'); sel.innerHTML = '<option value="">ရွေးပါ</option>' + mappingList.map(m => `<option value="${m.id}">${m.serial} - ${m.rank} - ${m.name}</option>`).join(''); }
+    
     function autoFillIO() {
         const id = document.getElementById('io_person').value; if(!id) return;
         const p = mappingList.find(m => m.id == id);
         const area = document.getElementById('items_area'); document.getElementById('io_details').style.display = 'block';
         const isMA13 = p.type.includes('၁၃');
-        const items = [{n: p.type + " ("+p.wNo+")", l: '၁', u: 'လက်', q: '၁'}, {n: isMA13 ? '၉ မမကျည်' : '၅.၅၆ မမကျည်', l: '၂', u: 'တောင့်', q: isMA13 ? '၂၄၀' : '၁၇၀'}, {n: isMA13 ? 'အမ်အေ-၁၃ ကျည်အိမ်' : 'အမ်အေ-၁/၃ ကျည်အိမ်', l: '၃', u: 'ခု', q: isMA13 ? '၅' : '၃'}, {n: isMA13 ? 'အမ်အေ-၁၃ လှံစွပ်' : 'အမ်အေ-၁ လှံစွပ်', l: '၄', u: 'ချောင်း', q: '၁'}, {n: isMA13 ? 'အမ်အေ-၁၃ လွယ်ကြိုး' : 'အမ်အေ-၁/၃ လွယ်ကြိုး', l: '၅', u: 'ချောင်း', q: '၁'}];
+        const items = [
+            {n: p.type + " ("+p.wNo+")", l: '၁', u: 'လက်', q: '၁'}, 
+            {n: isMA13 ? '၉ မမကျည်' : '၅.၅၆ မမကျည်', l: '၂', u: 'တောင့်', q: isMA13 ? '၂၄၀' : '၁၇၀'}, 
+            {n: isMA13 ? 'အမ်အေ-၁၃ ကျည်အိမ်' : 'အမ်အေ-၁/၃ ကျည်အိမ်', l: '၃', u: 'ခု', q: isMA13 ? '၅' : '၃'}, 
+            {n: isMA13 ? 'အမ်အေ-၁၃ လွယ်ကြိုး' : 'အမ်အေ-၁/၃ လွယ်ကြိုး', l: '၄', u: 'ချောင်း', q: '၁'},
+            {n: isMA13 ? 'အမ်အေ-၁၃ လှံစွပ်' : 'အမ်အေ-၁ လှံစွပ်', l: '၅', u: 'ချောင်း', q: '၀'}
+        ];
         area.innerHTML = items.map(it => `<div class="card" style="padding:10px; margin-bottom:5px; background:#f8fafc; border:1px solid #e2e8f0;"><div class="form-grid"><div class="form-group"><label>ပစ္စည်း</label><input type="text" class="io-n" value="${it.n}"></div><div class="form-group"><label>လယ်ဂျာ</label><input type="text" class="io-l" value="${it.l}"></div><div class="form-group"><label>အရေအတွက် (${it.u})</label><input type="text" class="io-q" value="${mmNumInput(it.q)}"></div><input type="hidden" class="io-u" value="${it.u}"></div></div>`).join('');
+        updateAutoRemark();
+    }
+
+    function updateAutoRemark() {
+        const purp = document.getElementById('io_purpose').value;
+        const loc = document.getElementById('io_location').value;
+        const remark = document.getElementById('io_remark');
+        if(document.getElementById('edit_io_id').value === "") {
+           remark.value = purp + (loc ? " (" + loc + ")" : "") + " အတွက်ထုတ်ပေးခြင်းဖြစ်ပါသည်။";
+        }
     }
 
     function processIO(type) {
@@ -211,12 +250,23 @@
         const p = mappingList.find(m => m.id == pId);
         let items = []; 
         document.querySelectorAll('.io-n').forEach((n, i) => {
-            if(n.value.trim() !== "") { 
-                items.push({ n: n.value, l: document.querySelectorAll('.io-l')[i].value, u: document.querySelectorAll('.io-u')[i].value, q: document.querySelectorAll('.io-q')[i].value });
+            const qVal = document.querySelectorAll('.io-q')[i].value;
+            const enQty = parseInt(toEn(qVal)) || 0;
+            if(n.value.trim() !== "" && enQty > 0) { 
+                items.push({ n: n.value, l: document.querySelectorAll('.io-l')[i].value, u: document.querySelectorAll('.io-u')[i].value, q: qVal });
             }
         });
         const editId = document.getElementById('edit_io_id').value;
-        const entry = { id: editId ? parseInt(editId) : Date.now(), p, keeper: { serial: document.getElementById('k_serial').value, rank: document.getElementById('k_rank').value, name: document.getElementById('k_name').value }, date: document.getElementById('io_date').value, purpose: document.getElementById('io_purpose').value, remark: type === 'OUT' ? (document.getElementById('io_purpose').value + (document.getElementById('io_location').value ? " ("+document.getElementById('io_location').value+")" : "") + " အတွက်ထုတ်ပေးခြင်းဖြစ်ပါသည်။") : "တာဝန်ပြီးဆုံး၍ ပြန်လည်အပ်နှံခြင်းဖြစ်ပါသည်။", type, items };
+        const entry = { 
+            id: editId ? parseInt(editId) : Date.now(), 
+            p, 
+            keeper: { serial: document.getElementById('k_serial').value, rank: document.getElementById('k_rank').value, name: document.getElementById('k_name').value }, 
+            date: document.getElementById('io_date').value, 
+            purpose: document.getElementById('io_purpose').value, 
+            remark: document.getElementById('io_remark').value || (type === 'IN' ? "တာဝန်ပြီးဆုံး၍ ပြန်လည်အပ်နှံခြင်းဖြစ်ပါသည်။" : ""),
+            type, 
+            items 
+        };
         if(editId) {
             if(type==='OUT') outList[outList.findIndex(x=>x.id==editId)] = entry; else historyList[historyList.findIndex(x=>x.id==editId)] = entry;
             document.getElementById('edit_io_id').value = ''; document.getElementById('io_title').innerText = '၂။ အထုတ်/အသွင်း ပြုလုပ်ရန်';
@@ -248,6 +298,7 @@
         document.getElementById('io_person').value = data.p.id;
         document.getElementById('io_date').value = data.date;
         document.getElementById('io_purpose').value = data.purpose;
+        document.getElementById('io_remark').value = data.remark;
         document.getElementById('io_details').style.display = 'block';
         document.getElementById('items_area').innerHTML = data.items.map(it => `<div class="card" style="padding:10px; margin-bottom:5px; background:#f8fafc; border:1px solid #e2e8f0;"><div class="form-grid"><div class="form-group"><label>ပစ္စည်း</label><input type="text" class="io-n" value="${it.n}"></div><div class="form-group"><label>လယ်ဂျာ</label><input type="text" class="io-l" value="${it.l}"></div><div class="form-group"><label>အရေအတွက် (${it.u})</label><input type="text" class="io-q" value="${it.q}"></div><input type="hidden" class="io-u" value="${it.u}"></div></div>`).join('');
         if(type==='OUT') { document.getElementById('btn_in').style.display='none'; document.getElementById('btn_out').style.display='block'; }
@@ -281,6 +332,15 @@
         body.innerHTML = h;
     }
     function updateStock(key, field, val) { stockMaster[key][field] = parseInt(toEn(val)) || 0; localStorage.setItem('stockMaster', JSON.stringify(stockMaster)); renderDashboard(); }
+
+    function renderWeaponStock() {
+        const body = document.getElementById('wpStockBody');
+        const issuedIds = outList.map(o => o.p.id);
+        let stockItems = mappingList.filter(m => !issuedIds.includes(m.id));
+        const priority = { "အမ်အေ-၁၃": 1, "အမ်အေ-၃": 2, "အမ်အေ-၁": 3 };
+        stockItems.sort((a, b) => (priority[a.type] || 99) - (priority[b.type] || 99));
+        body.innerHTML = stockItems.length > 0 ? stockItems.map((s, i) => `<tr><td>${mmNumInput(i+1)}</td><td>${s.serial}</td><td>${s.rank} ${s.name}</td><td style="font-weight:bold; color:#2563eb;">${s.type}</td><td>${s.wNo}</td></tr>`).join('') : '<tr><td colspan="5">စတိုထဲတွင် လက်နက်လက်ကျန်မရှိပါ။</td></tr>';
+    }
 
     const canvas = document.getElementById('voucherCanvas'); const ctx = canvas.getContext('2d');
     function initVoucher(id, type) { let d = (type === 'OUT') ? outList.find(o => o.id == id) : historyList.find(h => h.id == id); if(!d) return; document.getElementById('canvasOverlay').style.display = 'block'; drawVoucher(d, type); }
@@ -317,8 +377,21 @@
             }
         });
         ctx.font="bold 13px sans-serif"; const totalT = `(စုစုပေါင်းပစ္စည်း ( ${mmNumInput(rowIndex)} ) မျိုးတည်းသာ)`; ctx.fillText(totalT, (800 - ctx.measureText(totalT).width) / 2, tTop + 340); 
-        ctx.font="13px sans-serif"; const remarkFull = "မှတ်ချက်။ " + d.remark; ctx.fillText(remarkFull, (800 - ctx.measureText(remarkFull).width) / 2, tTop + 400);
-        ctx.fillText("ထပ် ဆင့် လက် မှတ်", 550, tTop + 465);
+        ctx.font="13px sans-serif"; const remarkFull = "မှတ်ချက်။ ။ " + (d.remark || "-"); ctx.fillText(remarkFull, (800 - ctx.measureText(remarkFull).width) / 2, tTop + 400);
+        
+        // --- ညာဘက်ခြမ်း alignment ပြင်ဆင်ခြင်း ---
+        const rightEdge = 660; // "ကောင်း" column အနီးသို့ ရွှေ့ခြင်း
+        ctx.font="13px sans-serif";
+        const txt1 = "ထပ် ဆင့် လက် မှတ်";
+        const txt2 = "တပ်ရင်းမှူး";
+        const txt3 = "အမှတ်(၇၀၁၀)သံချပ်ကာတိုက်ခိုက်ရေးတပ်ရင်း";
+        
+        ctx.fillText(txt1, rightEdge - ctx.measureText(txt1).width + 30, tTop + 465);
+        ctx.font="bold 13px sans-serif";
+        let signY = tTop + 535; 
+        ctx.fillText(txt2, rightEdge - ctx.measureText(txt2).width + 30, signY);
+        ctx.fillText(txt3, rightEdge - ctx.measureText(txt3).width + 30, signY + 25);
+
         ctx.font="900 13px sans-serif"; let confirmY = tTop + tHeight + 25; 
         ctx.fillText("အထက်ပါပစ္စည်းများကိုထုတ်ပေးစာရင်းသွင်းပြီးကြောင်း", 60, confirmY); ctx.fillText("အတည်ပြုသည်။", 60, confirmY + 20);
         ctx.fillText("အထက်ပါပစ္စည်းများကိုလက်ခံစာရင်းသွင်းပြီးကြောင်း", 415, confirmY); ctx.fillText("အတည်ပြုသည်။", 415, confirmY + 20);
