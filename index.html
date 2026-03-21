@@ -28,6 +28,7 @@
         .btn-edit { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; margin-right: 5px; padding: 5px 10px; font-size: 12px; }
         .btn-delete { background: #fee2e2; color: #ef4444; border: 1px solid #fecaca; padding: 5px 10px; font-size: 12px; }
         .btn-print { background: #10b981; color: white; padding: 5px 10px; font-size: 12px; }
+        .btn-share { background: #8b5cf6; color: white; padding: 10px 20px; font-size: 16px; margin-left: 10px; }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; min-width: 600px; }
         th, td { border: 1px solid #e2e8f0; padding: 10px; text-align: center; font-size: 0.9rem; }
         th { background: #f8fafc; }
@@ -172,6 +173,7 @@
 <div id="canvasOverlay">
     <div style="margin-bottom: 20px;">
         <button class="btn btn-print" onclick="downloadImage()" style="font-size: 16px; padding: 10px 20px;">High-Res PNG သိမ်းဆည်းရန်</button>
+        <button class="btn btn-share" onclick="shareVoucher()">Share (မျှဝေမည်)</button>
         <button class="btn" style="background:#ef4444; color:white; margin-left:10px; font-size: 16px; padding: 10px 20px;" onclick="document.getElementById('canvasOverlay').style.display='none'">ပိတ်မည်</button>
     </div>
     <canvas id="voucherCanvas" width="1600" height="2262"></canvas>
@@ -379,18 +381,10 @@
         ctx.font="bold 13px sans-serif"; const totalT = `(စုစုပေါင်းပစ္စည်း ( ${mmNumInput(rowIndex)} ) မျိုးတည်းသာ)`; ctx.fillText(totalT, (800 - ctx.measureText(totalT).width) / 2, tTop + 340); 
         ctx.font="13px sans-serif"; const remarkFull = "မှတ်ချက်။ ။ " + (d.remark || "-"); ctx.fillText(remarkFull, (800 - ctx.measureText(remarkFull).width) / 2, tTop + 400);
         
-        // --- ညာဘက်ခြမ်း alignment ပြင်ဆင်ခြင်း ---
-        const rightEdge = 660; // "ကောင်း" column အနီးသို့ ရွှေ့ခြင်း
-        ctx.font="13px sans-serif";
-        const txt1 = "ထပ် ဆင့် လက် မှတ်";
-        const txt2 = "တပ်ရင်းမှူး";
-        const txt3 = "အမှတ်(၇၀၁၀)သံချပ်ကာတိုက်ခိုက်ရေးတပ်ရင်း";
-        
+        const rightEdge = 660; ctx.font="13px sans-serif";
+        const txt1 = "ထပ် ဆင့် လက် မှတ်"; const txt2 = "တပ်ရင်းမှူး"; const txt3 = "အမှတ်(၇၀၁၀)သံချပ်ကာတိုက်ခိုက်ရေးတပ်ရင်း";
         ctx.fillText(txt1, rightEdge - ctx.measureText(txt1).width + 30, tTop + 465);
-        ctx.font="bold 13px sans-serif";
-        let signY = tTop + 535; 
-        ctx.fillText(txt2, rightEdge - ctx.measureText(txt2).width + 30, signY);
-        ctx.fillText(txt3, rightEdge - ctx.measureText(txt3).width + 30, signY + 25);
+        ctx.font="bold 13px sans-serif"; let signY = tTop + 535; ctx.fillText(txt2, rightEdge - ctx.measureText(txt2).width + 30, signY); ctx.fillText(txt3, rightEdge - ctx.measureText(txt3).width + 30, signY + 25);
 
         ctx.font="900 13px sans-serif"; let confirmY = tTop + tHeight + 25; 
         ctx.fillText("အထက်ပါပစ္စည်းများကိုထုတ်ပေးစာရင်းသွင်းပြီးကြောင်း", 60, confirmY); ctx.fillText("အတည်ပြုသည်။", 60, confirmY + 20);
@@ -407,6 +401,18 @@
     }
 
     function downloadImage() { const link = document.createElement('a'); link.download = 'Voucher_' + Date.now() + '.png'; link.href = canvas.toDataURL('image/png', 1.0); link.click(); }
+    
+    async function shareVoucher() {
+        const dataUrl = canvas.toDataURL('image/png');
+        const blob = await (await fetch(dataUrl)).blob();
+        const file = new File([blob], 'Voucher.png', { type: 'image/png' });
+        if (navigator.share) {
+            try {
+                await navigator.share({ files: [file], title: 'Voucher', text: 'လက်နက်ခဲယမ်းထုတ်ပေးပြေစာ' });
+            } catch (err) { console.log("Share failed: ", err); }
+        } else { alert("သင့်ဖုန်း Browser သည် Share Function ကို အထောက်အပံ့မပေးပါခင်ဗျာ။"); }
+    }
+
     function exportJSON() { const data = { map: mappingList, out: outList, his: historyList, stock: stockMaster }; const blob = new Blob([JSON.stringify(data)], {type: 'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `Armory_Backup_${Date.now()}.json`; a.click(); }
     function importJSON(e) { const reader = new FileReader(); reader.onload = (ev) => { const data = JSON.parse(ev.target.result); mappingList = data.map || []; outList = data.out || []; historyList = data.his || []; stockMaster = data.stock || stockMaster; localStorage.setItem('map', JSON.stringify(mappingList)); localStorage.setItem('out', JSON.stringify(outList)); localStorage.setItem('his', JSON.stringify(historyList)); localStorage.setItem('stockMaster', JSON.stringify(stockMaster)); location.reload(); }; reader.readAsText(e.target.files[0]); }
 </script>
